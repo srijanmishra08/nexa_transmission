@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nexa Transmission LLP — Precision Gears. Quality Without Compromise.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #E85D0C;
+    --orange-dim: rgba(232,93,12,0.15);
+    --black: #0D0D0D;
+    --charcoal: #141414;
+    --dark: #1A1A1A;
+    --dark2: #111111;
+    --off-white: #E8E4DC;
+    --muted: #888880;
+    --light-bg: #F4F1EC;
+    --border: rgba(255,255,255,0.08);
+    --font-head: 'Barlow Condensed', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.4s, border-color 0.4s;
+    border-bottom: 1px solid transparent;
+  }
+  nav.solid {
+    background: rgba(13,13,13,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom-color: var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo-text {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+    color: var(--off-white);
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .nav-logo-text span { display: block; font-size: 10px; font-weight: 400; letter-spacing: 0.2em; color: var(--muted); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.25s;
+  }
+  .nav-links a .num { color: var(--orange); margin-right: 6px; }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--orange);
+    transition: width 0.28s ease;
+  }
+  .nav-links a:hover { color: var(--off-white); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .btn-enquire {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--off-white);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 9px 20px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.28s, border-color 0.28s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-enquire::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--orange);
+    transform: translateX(-101%);
+    transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+    z-index: 0;
+  }
+  .btn-enquire:hover { color: #fff; border-color: var(--orange); }
+  .btn-enquire:hover::before { transform: translateX(0); }
+  .btn-enquire span { position: relative; z-index: 1; }
+  .btn-dot { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; flex-shrink: 0; }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  /* Blueprint grid */
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+    pointer-events: none;
+  }
+
+  #hero-canvas {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 120px 48px 80px;
+    max-width: 600px;
+  }
+
+  .hero-est {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .hero-est::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--orange);
+  }
+
+  .hero-title {
+    font-family: var(--font-head);
+    font-weight: 900;
+    line-height: 0.92;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-title .line1 {
+    font-size: clamp(56px, 7vw, 96px);
+    color: var(--off-white);
+    display: block;
+  }
+  .hero-title .line2 {
+    font-size: clamp(56px, 7vw, 96px);
+    color: var(--off-white);
+    display: block;
+  }
+  .hero-title .line3 {
+    font-size: clamp(48px, 6vw, 84px);
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(232,93,12,0.7);
+    display: block;
+    font-style: italic;
+  }
+
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(232,228,220,0.65);
+    max-width: 420px;
+    margin-bottom: 40px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .stat-badge {
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.03);
+  }
+  .stat-badge .num {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 36px;
+    color: var(--orange);
+    line-height: 1;
+    display: block;
+  }
+  .stat-badge .label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--orange);
+    border: 1px solid var(--orange);
+    padding: 14px 32px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-cta .arrow {
+    transition: transform 0.3s;
+    display: inline-block;
+  }
+  .btn-cta:hover {
+    background: transparent;
+    color: var(--orange);
+  }
+  .btn-cta:hover .arrow { transform: translateX(6px); }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px; left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--orange), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* ── SECTION COMMONS ── */
+  section { position: relative; }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-header {
+    margin-bottom: 64px;
+  }
+  .section-header .title {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(44px, 5vw, 72px);
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+  .section-header .subtitle {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+  .section-rule {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0 48px;
+  }
+
+  /* Reveal animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ── INTRO ── */
+  #introduction {
+    background: var(--light-bg);
+    color: var(--black);
+    padding: 120px 48px;
+  }
+  #introduction .section-label { color: var(--orange); }
+  #introduction .section-rule { background: rgba(0,0,0,0.1); }
+  #introduction .section-header .title { color: var(--black); }
+  #introduction .section-header .subtitle { color: #888; }
+
+  .intro-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .intro-label-col .label-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: #888;
+    text-transform: uppercase;
+  }
+
+  .intro-stat-badge {
+    margin-top: 40px;
+    border: 1px solid rgba(0,0,0,0.12);
+    padding: 20px 24px;
+    display: inline-block;
+    background: rgba(0,0,0,0.03);
+  }
+  .intro-stat-badge .num {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 52px;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .intro-stat-badge .label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    color: #888;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 6px;
+  }
+
+  .intro-body {
+    font-size: clamp(22px, 2.8vw, 38px);
+    font-family: var(--font-body);
+    font-weight: 500;
+    line-height: 1.45;
+    color: #1A1A1A;
+  }
+  .intro-body .highlight { color: var(--orange); }
+
+  /* ── CAPABILITIES ── */
+  #capabilities {
+    background: var(--charcoal);
+    padding: 120px 48px;
+  }
+
+  .caps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .cap-card {
+    padding: 40px 32px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .cap-card:last-child { border-right: none; }
+  .cap-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--orange);
+    transition: width 0.4s ease;
+  }
+  .cap-card:hover { background: rgba(232,93,12,0.04); }
+  .cap-card:hover::after { width: 100%; }
+
+  .cap-icon {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 28px;
+    opacity: 0.85;
+  }
+  .cap-icon svg { width: 100%; height: 100%; stroke: var(--orange); stroke-width: 1.2; fill: none; }
+
+  .cap-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--orange);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .cap-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--off-white);
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .cap-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .cap-badge {
+    display: inline-block;
+    margin-top: 20px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 1px solid var(--orange);
+    padding: 4px 10px;
+  }
+
+  /* ── SHOP FLOOR ── */
+  #shopfloor {
+    background: var(--dark2);
+    padding: 120px 48px;
+  }
+
+  .shopfloor-intro {
+    font-family: var(--font-body);
+    font-size: clamp(16px, 2vw, 22px);
+    line-height: 1.6;
+    color: rgba(232,228,220,0.7);
+    max-width: 800px;
+    margin-bottom: 64px;
+  }
+  .shopfloor-intro .hi { color: var(--orange); }
+
+  .machine-list {
+    width: 100%;
+    border-top: 1px solid var(--border);
+  }
+
+  .machine-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 160px 40px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 24px;
+    transition: background 0.25s, padding-left 0.25s;
+    cursor: default;
+    position: relative;
+  }
+  .machine-row::before {
+    content: '';
+    position: absolute;
+    left: -48px; top: 0; bottom: 0;
+    width: 0;
+    background: rgba(232,93,12,0.06);
+    transition: width 0.3s;
+  }
+  .machine-row:hover::before { width: calc(100% + 96px); }
+  .machine-row:hover .machine-name { color: var(--off-white); }
+
+  .machine-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+  }
+
+  .machine-name {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(232,228,220,0.75);
+    transition: color 0.25s;
+  }
+
+  .machine-brand {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: right;
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .machine-brand.coming {
+    color: var(--orange);
+    border-color: var(--orange);
+    opacity: 0.7;
+  }
+
+  .machine-arrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ── INDUSTRIES ── */
+  #industries {
+    background: var(--light-bg);
+    color: var(--black);
+    padding: 120px 48px;
+  }
+  #industries .section-label { color: var(--orange); }
+  #industries .section-rule { background: rgba(0,0,0,0.1); }
+  #industries .section-header .title { color: var(--black); }
+  #industries .section-header .subtitle { color: #888; }
+
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .ind-card {
+    padding: 40px 28px;
+    border-right: 1px solid rgba(0,0,0,0.1);
+    position: relative;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+  }
+  .ind-card:last-child { border-right: none; }
+  .ind-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 0;
+    background: var(--orange);
+    transition: height 0.35s ease;
+  }
+  .ind-card:hover {
+    background: rgba(232,93,12,0.04);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(232,93,12,0.12);
+    border-color: var(--orange) !important;
+  }
+  .ind-card:hover::before { height: 2px; }
+
+  .ind-icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 24px;
+  }
+  .ind-icon svg { width: 100%; height: 100%; stroke: var(--orange); stroke-width: 1.2; fill: none; }
+
+  .ind-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--orange);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .ind-title {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+
+  .ind-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.7;
+    color: #555;
+  }
+
+  /* ── TEAM & CONTACT ── */
+  #contact {
+    background: var(--dark);
+    padding: 120px 48px;
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-left .big-num {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(96px, 12vw, 160px);
+    line-height: 0.85;
+    color: var(--orange);
+    display: block;
+  }
+  .contact-left .big-sub {
+    font-family: var(--font-head);
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.15;
+    margin-top: 16px;
+  }
+  .contact-left .big-sub span { color: var(--orange); }
+
+  .contact-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--orange);
+    margin: 32px 0;
+  }
+
+  .contact-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(232,228,220,0.65);
+    max-width: 380px;
+  }
+
+  .contact-right .form-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--off-white);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.25s, background 0.25s;
+    resize: none;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(136,136,128,0.5);
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--orange);
+    background: rgba(232,93,12,0.04);
+  }
+  .form-group textarea { height: 120px; }
+
+  .btn-submit {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--orange);
+    border: 1px solid var(--orange);
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .btn-submit:hover {
+    background: transparent;
+    color: var(--orange);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 64px 48px 40px;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .footer-brand .tagline {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 16px;
+    line-height: 1.2;
+    color: var(--off-white);
+  }
+  .footer-brand .tagline span { color: var(--orange); }
+
+  .footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-end;
+  }
+  .footer-nav a {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .footer-nav a .fn { color: var(--orange); margin-right: 8px; }
+  .footer-nav a:hover { color: var(--off-white); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Cursor crosshair in hero */
+  .crosshair {
+    position: fixed;
+    top: 0; left: 0;
+    width: 20px; height: 20px;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .crosshair svg { width: 100%; height: 100%; }
+  body:hover .crosshair { opacity: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .caps-grid { grid-template-columns: repeat(2, 1fr); }
+    .cap-card { border-bottom: 1px solid var(--border); }
+    .industries-grid { grid-template-columns: repeat(3, 1fr); }
+    .ind-card { border-bottom: 1px solid rgba(0,0,0,0.1); }
+  }
+  @media (max-width: 800px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 100px 24px 60px; }
+    #hero-canvas { width: 100%; opacity: 0.3; }
+    .intro-layout { grid-template-columns: 1fr; gap: 40px; }
+    .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+    .industries-grid { grid-template-columns: repeat(2, 1fr); }
+    .caps-grid { grid-template-columns: 1fr; }
+    section { padding-left: 24px !important; padding-right: 24px !important; }
+    .machine-row { grid-template-columns: 60px 1fr 120px; }
+    .machine-arrow { display: none; }
+    footer { padding: 40px 24px 28px; }
+    .footer-top { flex-direction: column; gap: 32px; }
+    .footer-nav { align-items: flex-start; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="crosshair" id="crosshair">
+  <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <line x1="10" y1="0" x2="10" y2="7" stroke="#E85D0C" stroke-width="1"/>
+    <line x1="10" y1="13" x2="10" y2="20" stroke="#E85D0C" stroke-width="1"/>
+    <line x1="0" y1="10" x2="7" y2="10" stroke="#E85D0C" stroke-width="1"/>
+    <line x1="13" y1="10" x2="20" y2="10" stroke="#E85D0C" stroke-width="1"/>
+    <circle cx="10" cy="10" r="2.5" stroke="#E85D0C" stroke-width="0.8"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="18" cy="18" r="8" stroke="#E85D0C" stroke-width="1.5"/>
+      <circle cx="18" cy="18" r="3.5" fill="#E85D0C"/>
+      <path d="M18 2v4M18 30v4M2 18h4M30 18h4M6.1 6.1l2.83 2.83M27.07 27.07l2.83 2.83M6.1 29.9l2.83-2.83M27.07 8.93l2.83-2.83" stroke="#E85D0C" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M15 18a3 3 0 106 0 3 3 0 00-6 0z" fill="none"/>
+      <path d="M14 16h-2l-1-2 2-2 2 1M22 16h2l1-2-2-2-2 1M14 20h-2l-1 2 2 2 2-1M22 20h2l1 2-2 2-2-1" stroke="#E85D0C" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="nav-logo-text">NEXA<span>Transmission</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#introduction"><span class="num">01</span>Introduction</a></li>
+    <li><a href="#capabilities"><span class="num">02</span>Capabilities</a></li>
+    <li><a href="#industries"><span class="num">03</span>Industries</a></li>
+    <li><a href="#contact"><span class="num">04</span>Contact</a></li>
+  </ul>
+  <a href="#contact" class="btn-enquire">
+    <span class="btn-dot"></span>
+    <span>Enquire</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <p class="hero-est reveal">Est. 1999 &nbsp;·&nbsp; Raipur, CG, India</p>
+    <h1 class="hero-title reveal reveal-delay-1">
+      <span class="line1">Precision</span>
+      <span class="line2">Gears.</span>
+      <span class="line3">Quality Without<br>Compromise.</span>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      25+ years of legacy in precision gear and gearbox engineering for industrial transmission systems — designed, manufactured and refurbished in-house to OEM standards.
+    </p>
+    <div class="hero-stats reveal reveal-delay-3">
+      <div class="stat-badge">
+        <span class="num">25<sup style="font-size:0.5em">+</sup></span>
+        <span class="label">Years of Legacy</span>
+      </div>
+      <div class="stat-badge">
+        <span class="num">20<sup style="font-size:0.5em">+</sup></span>
+        <span class="label">Engineers &amp; Experts</span>
+      </div>
+    </div>
+    <a href="#contact" class="btn-cta reveal reveal-delay-4">
+      Enquire Now <span class="arrow">→</span>
+    </a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- INTRODUCTION -->
+<section id="introduction">
+  <div class="section-header reveal">
+    <p class="section-label">01 / Introduction</p>
+    <h2 class="title" style="color:var(--black);">What We Do.</h2>
+    <div class="section-rule"></div>
+    <p class="subtitle">Engineering &nbsp;·&nbsp; Manufacturing &nbsp;·&nbsp; Refurbishment</p>
+  </div>
+  <div class="intro-layout">
+    <div class="intro-label-col reveal reveal-delay-1">
+      <p class="label-tag">Our Strength</p>
+      <div class="intro-stat-badge">
+        <span class="num">5</span>
+        <span class="label">Core Industries</span>
+      </div>
+    </div>
+    <div class="intro-body reveal reveal-delay-2">
+      Built on <span class="highlight">25+ years of legacy</span> in precision gear and gearbox engineering for industrial transmission systems — we design, manufacture and rebuild drives that <span class="highlight">heavy industry depends on.</span>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="section-header reveal">
+    <p class="section-label">02 / Capabilities</p>
+    <h2 class="title">What We Build.</h2>
+    <div class="section-rule"></div>
+    <p class="subtitle" style="color:var(--muted)">Four Core Services</p>
+  </div>
+  <div class="caps-grid">
+    <div class="cap-card reveal reveal-delay-1">
+      <div class="cap-icon">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="10"/><circle cx="22" cy="22" r="4"/><path d="M22 4v6M22 34v6M4 22h6M34 22h6M8.7 8.7l4.24 4.24M31.07 31.07l4.24 4.24M8.7 35.3l4.24-4.24M31.07 12.93l4.24-4.24"/></svg>
+      </div>
+      <span class="cap-num">— 01</span>
+      <h3 class="cap-title">Gearbox Spares to OEM Standard</h3>
+      <p class="cap-desc">Drop-in replacement gears, shafts and sub-assemblies engineered to match original OEM specification — dimensional, metallurgical and functional.</p>
+    </div>
+    <div class="cap-card reveal reveal-delay-2">
+      <div class="cap-icon">
+        <svg viewBox="0 0 44 44"><rect x="4" y="14" width="14" height="16" rx="1"/><rect x="26" y="14" width="14" height="16" rx="1"/><path d="M18 22h8M22 18l4 4-4 4"/></svg>
+      </div>
+      <span class="cap-num">— 02</span>
+      <h3 class="cap-title">Gearbox 1:1 Replacement</h3>
+      <p class="cap-desc">Form, fit and function equivalent gearboxes — reverse-engineered to dimensional envelopes and torque ratings, without re-piping or re-aligning.</p>
+    </div>
+    <div class="cap-card reveal reveal-delay-3">
+      <div class="cap-icon">
+        <svg viewBox="0 0 44 44"><path d="M22 8l14 8v16l-14 8-14-8V16z"/><circle cx="22" cy="22" r="5"/><path d="M22 17v-9M22 27v9M17 22H8M27 22h9"/></svg>
+      </div>
+      <span class="cap-num">— 03</span>
+      <h3 class="cap-title">Gearbox Refurbishment</h3>
+      <p class="cap-desc">End-of-life drives restored to new condition — strip, NDT inspection, re-gearing, re-bearing and load-test — at a fraction of new-unit cost and lead time.</p>
+    </div>
+    <div class="cap-card reveal reveal-delay-4">
+      <div class="cap-icon">
+        <svg viewBox="0 0 44 44"><polyline points="4,34 14,20 22,28 30,14 40,10"/><circle cx="40" cy="10" r="2.5"/><path d="M4 38h36"/></svg>
+      </div>
+      <span class="cap-num">— 04</span>
+      <h3 class="cap-title">Preventive Maintenance Suite</h3>
+      <p class="cap-desc">AI-enabled condition monitoring and scheduled service — vibration, thermal and wear-pattern analysis that flags failure modes before they interrupt production.</p>
+      <span class="cap-badge">AI-Enabled</span>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP FLOOR -->
+<section id="shopfloor">
+  <div class="section-header reveal">
+    <p class="section-label">02 / Shop Floor</p>
+    <h2 class="title">Plant &amp; Machines.</h2>
+    <div class="section-rule"></div>
+    <p class="subtitle" style="color:var(--muted)">Plant &nbsp;·&nbsp; Machines &nbsp;·&nbsp; Precision</p>
+  </div>
+  <p class="shopfloor-intro reveal reveal-delay-1">
+    A fully integrated precision workshop — <span class="hi">gear cutting, grinding, heat treatment and fabrication</span> under one roof, equipped with machines from the benchmark makers of their categories.
+  </p>
+  <div class="machine-list reveal reveal-delay-2">
+    <div class="machine-row"><span class="machine-num">M/01</span><span class="machine-name">CNC Gear Hobbing</span><span class="machine-brand">GLEASON</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/02</span><span class="machine-name">CNC Gear Grinding</span><span class="machine-brand">HÖFLER</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/03</span><span class="machine-name">CNC Gear Shaper</span><span class="machine-brand coming">LIEBHERR · DEC 2026</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/04</span><span class="machine-name">Heat Treatment Facility</span><span class="machine-brand">IN-HOUSE</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/05</span><span class="machine-name">Surface Grinding</span><span class="machine-brand">CHEVALIER</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/06</span><span class="machine-name">Shaft Grinding — OD &amp; ID</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/07</span><span class="machine-name">Keyway Milling</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/08</span><span class="machine-name">Vertical Milling</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/09</span><span class="machine-name">Radial Drill</span><span class="machine-brand">RABOMA</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/10</span><span class="machine-name">Horizontal Boring Machine</span><span class="machine-brand">GRAFFENSTADEN</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/11</span><span class="machine-name">Hydraulic Presses — 350T &amp; 150T</span><span class="machine-brand">IN-HOUSE</span><span class="machine-arrow">→</span></div>
+    <div class="machine-row"><span class="machine-num">M/12</span><span class="machine-name">Precision Lathes</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="section-header reveal">
+    <p class="section-label">03 / Industries</p>
+    <h2 class="title" style="color:var(--black);">Where Our Gears Turn.</h2>
+    <div class="section-rule"></div>
+    <p class="subtitle">Five Core Sectors</p>
+  </div>
+  <div class="industries-grid">
+    <div class="ind-card reveal reveal-delay-1">
+      <div class="ind-icon">
+        <svg viewBox="0 0 40 40"><rect x="4" y="20" width="32" height="16" rx="1"/><path d="M8 20V10l8-6 8 6v10M20 4v16M4 20h32"/><rect x="16" y="24" width="8" height="12"/></svg>
+      </div>
+      <span class="ind-num">— 3.1</span>
+      <h3 class="ind-title">Steel</h3>
+      <p class="ind-desc">Rolling-mill drives, sinter-plant reducers and caster gearboxes rebuilt to withstand continuous high-torque, high-temperature duty.</p>
+    </div>
+    <div class="ind-card reveal reveal-delay-2">
+      <div class="ind-icon">
+        <svg viewBox="0 0 40 40"><path d="M20 4v8M20 28v8M8 14l5 6M27 20l5 6M8 26l5-6M27 14l5-6"/><circle cx="20" cy="20" r="6"/><path d="M17 20l3-4 3 4-3 2-3-2z"/></svg>
+      </div>
+      <span class="ind-num">— 3.2</span>
+      <h3 class="ind-title">Power</h3>
+      <p class="ind-desc">Coal-handling, boiler-feed and cooling-tower gearboxes — engineered for 24×7 uptime in thermal generation plants.</p>
+    </div>
+    <div class="ind-card reveal reveal-delay-3">
+      <div class="ind-icon">
+        <svg viewBox="0 0 40 40"><ellipse cx="20" cy="30" rx="14" ry="6"/><path d="M6 30V18c0-5 6-10 14-10s14 5 14 10v12"/><path d="M14 18c0-3 2.7-6 6-6s6 3 6 6"/><line x1="20" y1="8" x2="20" y2="24"/></svg>
+      </div>
+      <span class="ind-num">— 3.3</span>
+      <h3 class="ind-title">Cement</h3>
+      <p class="ind-desc">Kiln drives, raw-mill and cement-mill reducers refurbished with dimensional and metallurgical parity to the OEM originals.</p>
+    </div>
+    <div class="ind-card reveal reveal-delay-4">
+      <div class="ind-icon">
+        <svg viewBox="0 0 40 40"><path d="M8 32l4-16h16l4 16H8z"/><path d="M14 16l-2-8h16l-2 8"/><path d="M20 8V4M16 4h8"/><line x1="12" y1="24" x2="28" y2="24"/></svg>
+      </div>
+      <span class="ind-num">— 3.4</span>
+      <h3 class="ind-title">Mining</h3>
+      <p class="ind-desc">Crusher, conveyor and ball-mill drives hardened for abrasive, dust-laden environments where failure is not an option.</p>
+    </div>
+    <div class="ind-card reveal reveal-delay-5">
+      <div class="ind-icon">
+        <svg viewBox="0 0 40 40"><path d="M20 6c-2 4-8 6-8 14a8 8 0 0016 0c0-8-6-10-8-14z"/><path d="M14 24c0 3.3 2.7 6 6 6s6-2.7 6-6"/><line x1="20" y1="34" x2="20" y2="38"/><path d="M14 38h12"/></svg>
+      </div>
+      <span class="ind-num">— 3.5</span>
+      <h3 class="ind-title">Agriculture</h3>
+      <p class="ind-desc">Gear drives for sugar-mill, rice-mill and oil-extraction equipment — serviced with rapid turnaround through seasonal demand peaks.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM & CONTACT -->
+<section id="contact">
+  <div class="section-header reveal">
+    <p class="section-label">04 / Team &amp; Contact</p>
+    <h2 class="title">Let's Build.</h2>
+    <div class="section-rule"></div>
+    <p class="subtitle" style="color:var(--muted)">Raipur, CG &nbsp;·&nbsp; +05:30 GMT</p>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-left reveal reveal-delay-1">
+      <span class="big-num">20<sup style="font-size:0.35em;vertical-align:super">+</sup></span>
+      <p class="big-sub">engineers, specialists and <span>industry veterans</span> on the bench.</p>
+      <div class="contact-rule"></div>
+      <p class="contact-body">
+        A lean organisation of 20+ experienced engineering professionals, backed by industry-specific visiting consultants and veterans whose careers span some of India's largest heavy-engineering projects.
+        <br><br>
+        Every enquiry is reviewed by an engineer — not a sales desk. For drawings, specification sheets or a plant visit, reach out directly.
+      </p>
+    </div>
+    <div class="contact-right reveal reveal-delay-2">
+      <p class="form-title">— Send an Enquiry</p>
+      <form id="enquiry-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" placeholder="Organisation or plant name" autocomplete="organization" />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Describe your requirement — gear type, application, urgency..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Submit Enquiry →</button>
+      </form>
+      <div id="form-success" style="display:none; margin-top:16px; font-family:var(--font-mono); font-size:12px; color:var(--orange); letter-spacing:0.1em;">
+        ✓ Enquiry received. An engineer will be in touch.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <svg width="40" height="40" viewBox="0 0 36 36" fill="none">
+        <circle cx="18" cy="18" r="8" stroke="#E85D0C" stroke-width="1.5"/>
+        <circle cx="18" cy="18" r="3.5" fill="#E85D0C"/>
+        <path d="M18 2v4M18 30v4M2 18h4M30 18h4M6.1 6.1l2.83 2.83M27.07 27.07l2.83 2.83M6.1 29.9l2.83-2.83M27.07 8.93l2.83-2.83" stroke="#E85D0C" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="tagline">Precision Gears.<br><span>Quality Without Compromise.</span></div>
+    </div>
+    <nav class="footer-nav">
+      <a href="#introduction"><span class="fn">01</span> Introduction</a>
+      <a href="#capabilities"><span class="fn">02</span> Capabilities</a>
+      <a href="#industries"><span class="fn">03</span> Industries</a>
+      <a href="#contact"><span class="fn">04</span> Contact</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Nexa Transmission LLP · All Rights Reserved</span>
+    <span>Raipur · Chhattisgarh · India</span>
+  </div>
+</footer>
+
+<script>
+/* ─── NAV scroll solid ─── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('solid', window.scrollY > 40);
+}, { passive: true });
+
+/* ─── Reveal on scroll ─── */
+const reveals = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => revealObs.observe(el));
+
+/* ─── Hero reveals on load ─── */
+window.addEventListener('load', () => {
+  document.querySelectorAll('#hero .reveal').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 200);
+  });
+});
+
+/* ─── Crosshair cursor ─── */
+const crosshair = document.getElementById('crosshair');
+document.addEventListener('mousemove', e => {
+  crosshair.style.left = e.clientX + 'px';
+  crosshair.style.top = e.clientY + 'px';
+});
+
+/* ─── Form submit ─── */
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('enquiry-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+
+/* ─── THREE.JS GEAR ANIMATION ─── */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+  camera.position.set(0, 0, 18);
+
+  /* Resize handler */
+  function resize() {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* ── Gear geometry builder ── */
+  function createGearGeometry(teeth, outerR, innerR, dedendumR, thickness, toothWidth) {
+    const shape = new THREE.Shape();
+    const toothAngle = (Math.PI * 2) / teeth;
+    const halfTooth = toothWidth / 2;
+
+    for (let i = 0; i < teeth; i++) {
+      const baseAngle = i * toothAngle;
+      const a0 = baseAngle - toothAngle * 0.38;
+      const a1 = baseAngle - halfTooth * 0.5;
+      const a2 = baseAngle + halfTooth * 0.5;
+      const a3 = baseAngle + toothAngle * 0.38;
+
+      if (i === 0) shape.moveTo(Math.cos(a0) * innerR, Math.sin(a0) * innerR);
+      else shape.lineTo(Math.cos(a0) * innerR, Math.sin(a0) * innerR);
+
+      shape.lineTo(Math.cos(a1) * outerR, Math.sin(a1) * outerR);
+      shape.lineTo(Math.cos(a2) * outerR, Math.sin(a2) * outerR);
+      shape.lineTo(Math.cos(a3) * innerR, Math.sin(a3) * innerR);
+    }
+    shape.closePath();
+
+    /* Hub hole */
+    const hole = new THREE.Path();
+    const hubR = dedendumR * 0.38;
+    hole.absarc(0, 0, hubR, 0, Math.PI * 2, true);
+    shape.holes.push(hole);
+
+    /* Spoke cutouts */
+    const numSpokes = Math.min(6, Math.max(4, Math.floor(teeth / 4)));
+    for (let s = 0; s < numSpokes; s++) {
+      const sa = (s / numSpokes) * Math.PI * 2;
+      const spokeHole = new THREE.Path();
+      spokeHole.absellipse(
+        Math.cos(sa) * dedendumR * 0.65,
+        Math.sin(sa) * dedendumR * 0.65,
+        dedendumR * 0.11,
+        dedendumR * 0.22,
+        sa, false
+      );
+      shape.holes.push(spokeHole);
+    }
+
+    const extSettings = {
+      depth: thickness,
+      bevelEnabled: true,
+      bevelThickness: 0.05,
+      bevelSize: 0.05,
+      bevelSegments: 2
+    };
+    const geo = new THREE.ExtrudeGeometry(shape, extSettings);
+    geo.center();
+    return geo;
+  }
+
+  const ORANGE = 0xE85D0C;
+  const WIRE_MAIN = 0xE85D0C;
+  const WIRE_DIM  = 0x331800;
+
+  /* ── Large gear ── */
+  const bigGeoSolid = createGearGeometry(24, 4.6, 3.8, 3.8, 0.55, 0.28);
+  const bigMat = new THREE.MeshBasicMaterial({ color: 0x0D0D0D, side: THREE.DoubleSide });
+  const bigGear = new THREE.Mesh(bigGeoSolid, bigMat);
+
+  const bigGeoWire = createGearGeometry(24, 4.6, 3.8, 3.8, 0.55, 0.28);
+  const bigWire = new THREE.LineSegments(
+    new THREE.EdgesGeometry(bigGeoWire, 8),
+    new THREE.LineBasicMaterial({ color: WIRE_MAIN, transparent: true, opacity: 0.9 })
+  );
+  const bigGroup = new THREE.Group();
+  bigGroup.add(bigGear);
+  bigGroup.add(bigWire);
+  bigGroup.position.set(-1.5, 1.2, 0);
+  scene.add(bigGroup);
+
+  /* ── Small pinion ── */
+  const smallGeoSolid = createGearGeometry(14, 2.7, 2.2, 2.2, 0.55, 0.28);
+  const smallMat = new THREE.MeshBasicMaterial({ color: 0x0D0D0D, side: THREE.DoubleSide });
+  const smallGear = new THREE.Mesh(smallGeoSolid, smallMat);
+
+  const smallGeoWire = createGearGeometry(14, 2.7, 2.2, 2.2, 0.55, 0.28);
+  const smallWire = new THREE.LineSegments(
+    new THREE.EdgesGeometry(smallGeoWire, 8),
+    new THREE.LineBasicMaterial({ color: WIRE_MAIN, transparent: true, opacity: 0.7 })
+  );
+  const smallGroup = new THREE.Group();
+  smallGroup.add(smallGear);
+  smallGroup.add(smallWire);
+
+  /* Position pinion to mesh with big gear */
+  const meshDist = 4.6 + 2.7 - 0.22; /* slight overlap for mesh illusion */
+  smallGroup.position.set(-1.5 + meshDist, 1.2, 0);
+  scene.add(smallGroup);
+
+  /* ── Blueprint dimension lines ── */
+  function addDimLine(x1, y1, x2, y2) {
+    const pts = [new THREE.Vector3(x1, y1, 0.1), new THREE.Vector3(x2, y2, 0.1)];
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const mat = new THREE.LineBasicMaterial({ color: 0x334455, transparent: true, opacity: 0.35 });
+    scene.add(new THREE.Line(geo, mat));
+  }
+  addDimLine(-8, -5, 8, -5);
+  addDimLine(-8, -5, -8, 5);
+  addDimLine(-6, 1.2, -6, -5.2);
+  addDimLine(6, 1.2, 6, -5.2);
+
+  /* Centre marks */
+  function addCross(x, y, size, color, opacity) {
+    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity });
+    [
+      [new THREE.Vector3(x - size, y, 0.2), new THREE.Vector3(x + size, y, 0.2)],
+      [new THREE.Vector3(x, y - size, 0.2), new THREE.Vector3(x, y + size, 0.2)]
+    ].forEach(pts => {
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
+    });
+  }
+  addCross(-1.5, 1.2, 0.6, ORANGE, 0.5);
+  addCross(-1.5 + meshDist, 1.2, 0.4, ORANGE, 0.4);
+
+  /* Pitch circle overlays */
+  function addCircle(cx, cy, r, col, op, seg = 64) {
+    const pts = [];
+    for (let i = 0; i <= seg; i++) {
+      const a = (i / seg) * Math.PI * 2;
+      pts.push(new THREE.Vector3(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 0.15));
+    }
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: op })));
+  }
+  addCircle(-1.5, 1.2, 4.6, 0x334455, 0.25);
+  addCircle(-1.5 + meshDist, 1.2, 2.7, 0x334455, 0.2);
+
+  /* ── Hover pause ── */
+  let paused = false;
+  const heroSection = document.getElementById('hero');
+  heroSection.addEventListener('mouseenter', () => { paused = true; });
+  heroSection.addEventListener('mouseleave', () => { paused = false; });
+
+  /* ── Animation loop ── */
+  let t = 0;
+  const BIG_SPEED = 0.003;
+  const SMALL_SPEED = BIG_SPEED * (24 / 14); /* gear ratio */
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (!paused) {
+      t += 1;
+      bigGroup.rotation.z = t * BIG_SPEED;
+      smallGroup.rotation.z = -(t * SMALL_SPEED) + (Math.PI / 14); /* phase offset for mesh */
+    }
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  /* ── Gentle float ── */
+  let floatT = 0;
+  function floatLoop() {
+    requestAnimationFrame(floatLoop);
+    floatT += 0.008;
+    bigGroup.position.y = 1.2 + Math.sin(floatT) * 0.06;
+    smallGroup.position.y = 1.2 + Math.sin(floatT + 0.5) * 0.04;
+  }
+  floatLoop();
+})();
+</script>
+</body>
+</html>

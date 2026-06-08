@@ -4,27 +4,61 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Nexa Transmission LLP — Precision Gears. Quality Without Compromise.</title>
+<link rel="icon" type="image/png" href="Artboard 42 copy@350x-8 (1).png" />
+<link rel="apple-touch-icon" href="Artboard 42 copy@350x-8 (1).png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
+  @font-face {
+    font-family: 'NeueHaasDisplay';
+    src: url('fonts/NeueHaasDisplayLight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'NeueHaasDisplay';
+    src: url('fonts/NeueHaasDisplayRoman.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'NeueHaasDisplay';
+    src: url('fonts/NeueHaasDisplayMediu.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GalanoClassic';
+    src: url('fonts/Rene Bieder - Galano Classic DEMO Alt Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --orange: #E85D0C;
-    --orange-dim: rgba(232,93,12,0.15);
-    --black: #0D0D0D;
-    --charcoal: #141414;
-    --dark: #1A1A1A;
-    --dark2: #111111;
-    --off-white: #E8E4DC;
+    --orange-dim: rgba(232,93,12,0.10);
+    --black: #FFFFFF;
+    --charcoal: #F5F2EE;
+    --dark: #F0EDE8;
+    --dark2: #FAF8F5;
+    --off-white: #1A1A1A;
     --muted: #888880;
-    --light-bg: #F4F1EC;
-    --border: rgba(255,255,255,0.08);
-    --font-head: 'Barlow Condensed', sans-serif;
+    --light-bg: #FFFFFF;
+    --border: rgba(0,0,0,0.10);
+    --font-head: 'NeueHaasDisplay', 'Helvetica Neue', sans-serif;
+    --font-display: 'GalanoClassic', 'NeueHaasDisplay', 'Helvetica Neue', sans-serif;
     --font-mono: 'IBM Plex Mono', monospace;
-    --font-body: 'Barlow', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
   }
 
   html { scroll-behavior: smooth; }
@@ -36,6 +70,8 @@
     overflow-x: hidden;
     cursor: default;
   }
+
+  /* ── Light theme global overrides ── */
 
   /* Grain overlay */
   body::after {
@@ -62,7 +98,7 @@
     border-bottom: 1px solid transparent;
   }
   nav.solid {
-    background: rgba(13,13,13,0.96);
+    background: rgba(255,255,255,0.97);
     backdrop-filter: blur(12px);
     border-bottom-color: var(--border);
   }
@@ -70,20 +106,20 @@
   .nav-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
     text-decoration: none;
+    width: 240px;
+    height: 56px;
+    overflow: hidden;
   }
-  .nav-logo svg { width: 36px; height: 36px; }
-  .nav-logo-text {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: 0.12em;
-    color: var(--off-white);
-    text-transform: uppercase;
-    line-height: 1.1;
+  .nav-logo-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.28);
+    transform-origin: center;
   }
-  .nav-logo-text span { display: block; font-size: 10px; font-weight: 400; letter-spacing: 0.2em; color: var(--muted); }
 
   .nav-links {
     display: flex;
@@ -112,7 +148,7 @@
     background: var(--orange);
     transition: width 0.28s ease;
   }
-  .nav-links a:hover { color: var(--off-white); }
+  .nav-links a:hover { color: #1A1A1A; }
   .nav-links a:hover::after { width: 100%; }
 
   .btn-enquire {
@@ -120,8 +156,8 @@
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--off-white);
-    border: 1px solid rgba(255,255,255,0.3);
+    color: #1A1A1A;
+    border: 1px solid rgba(0,0,0,0.25);
     padding: 9px 20px;
     text-decoration: none;
     position: relative;
@@ -149,8 +185,8 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
-    overflow: hidden;
-    background: var(--black);
+    overflow: visible;
+    background: #FFFFFF;
   }
 
   /* Blueprint grid */
@@ -159,20 +195,24 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px),
+      linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
     background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
     pointer-events: none;
   }
 
   #hero-canvas {
-    position: absolute;
+    position: fixed;
     top: 0; right: 0;
     width: 55%;
-    height: 100%;
+    height: 100vh;
     pointer-events: none;
+    z-index: 4;
+    opacity: 0;
+    transform-origin: center center;
+    will-change: transform, opacity;
   }
 
   .hero-content {
@@ -210,13 +250,15 @@
   }
   .hero-title .line1 {
     font-size: clamp(56px, 7vw, 96px);
-    color: var(--off-white);
+    color: #1A1A1A;
     display: block;
+    font-family: var(--font-display);
   }
   .hero-title .line2 {
     font-size: clamp(56px, 7vw, 96px);
-    color: var(--off-white);
+    color: #1A1A1A;
     display: block;
+    font-family: var(--font-display);
   }
   .hero-title .line3 {
     font-size: clamp(48px, 6vw, 84px);
@@ -224,13 +266,14 @@
     -webkit-text-stroke: 1.5px rgba(232,93,12,0.7);
     display: block;
     font-style: italic;
+    font-family: var(--font-display);
   }
 
   .hero-sub {
     font-family: var(--font-body);
     font-size: 15px;
     line-height: 1.65;
-    color: rgba(232,228,220,0.65);
+    color: rgba(26,26,26,0.6);
     max-width: 420px;
     margin-bottom: 40px;
   }
@@ -243,7 +286,7 @@
   .stat-badge {
     border: 1px solid var(--border);
     padding: 12px 20px;
-    background: rgba(255,255,255,0.03);
+    background: rgba(0,0,0,0.03);
   }
   .stat-badge .num {
     font-family: var(--font-head);
@@ -337,6 +380,7 @@
     text-transform: uppercase;
     line-height: 0.95;
     letter-spacing: -0.01em;
+    color: var(--off-white);
   }
   .section-header .subtitle {
     font-family: var(--font-mono);
@@ -369,15 +413,31 @@
   .reveal-delay-4 { transition-delay: 0.4s; }
   .reveal-delay-5 { transition-delay: 0.5s; }
 
-  /* ── INTRO ── */
+  /* Intro / Capabilities / Industries — text slides in from left */
+  #introduction .reveal,
+  #capabilities .reveal,
+  #industries .reveal {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  #introduction .reveal.visible,
+  #capabilities .reveal.visible,
+  #industries .reveal.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   #introduction {
-    background: var(--light-bg);
-    color: var(--black);
+    background: rgba(255,255,255,0.78);
+    color: #1A1A1A;
     padding: 120px 48px;
+    position: relative;
+    z-index: 5;
   }
   #introduction .section-label { color: var(--orange); }
   #introduction .section-rule { background: rgba(0,0,0,0.1); }
-  #introduction .section-header .title { color: var(--black); }
+  #introduction .section-header .title { color: #1A1A1A; }
   #introduction .section-header .subtitle { color: #888; }
 
   .intro-layout {
@@ -430,8 +490,10 @@
 
   /* ── CAPABILITIES ── */
   #capabilities {
-    background: var(--charcoal);
+    background: rgba(245,242,238,0.78);
     padding: 120px 48px;
+    position: relative;
+    z-index: 5;
   }
 
   .caps-grid {
@@ -482,7 +544,7 @@
     font-size: 22px;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    color: var(--off-white);
+    color: #1A1A1A;
     margin-bottom: 16px;
     line-height: 1.1;
   }
@@ -491,7 +553,7 @@
     font-family: var(--font-body);
     font-size: 13px;
     line-height: 1.7;
-    color: var(--muted);
+    color: #666660;
   }
 
   .cap-badge {
@@ -508,7 +570,7 @@
 
   /* ── SHOP FLOOR ── */
   #shopfloor {
-    background: var(--dark2);
+    background: #FFFFFF;
     padding: 120px 48px;
   }
 
@@ -516,7 +578,7 @@
     font-family: var(--font-body);
     font-size: clamp(16px, 2vw, 22px);
     line-height: 1.6;
-    color: rgba(232,228,220,0.7);
+    color: rgba(26,26,26,0.65);
     max-width: 800px;
     margin-bottom: 64px;
   }
@@ -543,11 +605,11 @@
     position: absolute;
     left: -48px; top: 0; bottom: 0;
     width: 0;
-    background: rgba(232,93,12,0.06);
+    background: rgba(232,93,12,0.07);
     transition: width 0.3s;
   }
   .machine-row:hover::before { width: calc(100% + 96px); }
-  .machine-row:hover .machine-name { color: var(--off-white); }
+  .machine-row:hover .machine-name { color: #1A1A1A; }
 
   .machine-num {
     font-family: var(--font-mono);
@@ -562,7 +624,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: rgba(232,228,220,0.75);
+    color: rgba(26,26,26,0.7);
     transition: color 0.25s;
   }
 
@@ -593,13 +655,15 @@
 
   /* ── INDUSTRIES ── */
   #industries {
-    background: var(--light-bg);
-    color: var(--black);
+    background: rgba(245,242,238,0.78);
+    color: #1A1A1A;
     padding: 120px 48px;
+    position: relative;
+    z-index: 5;
   }
   #industries .section-label { color: var(--orange); }
   #industries .section-rule { background: rgba(0,0,0,0.1); }
-  #industries .section-header .title { color: var(--black); }
+  #industries .section-header .title { color: #1A1A1A; }
   #industries .section-header .subtitle { color: #888; }
 
   .industries-grid {
@@ -679,6 +743,13 @@
     align-items: start;
   }
 
+  .contact-logo-img {
+    width: clamp(180px, 24vw, 280px);
+    height: auto;
+    display: block;
+    margin-bottom: 24px;
+  }
+
   .contact-left .big-num {
     font-family: var(--font-head);
     font-weight: 900;
@@ -694,6 +765,7 @@
     text-transform: uppercase;
     line-height: 1.15;
     margin-top: 16px;
+    color: #1A1A1A;
   }
   .contact-left .big-sub span { color: var(--orange); }
 
@@ -707,7 +779,7 @@
   .contact-body {
     font-size: 15px;
     line-height: 1.75;
-    color: rgba(232,228,220,0.65);
+    color: rgba(26,26,26,0.6);
     max-width: 380px;
   }
 
@@ -735,9 +807,9 @@
   .form-group input,
   .form-group textarea {
     width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    color: var(--off-white);
+    background: rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.15);
+    color: #1A1A1A;
     font-family: var(--font-mono);
     font-size: 13px;
     padding: 12px 16px;
@@ -747,7 +819,7 @@
   }
   .form-group input::placeholder,
   .form-group textarea::placeholder {
-    color: rgba(136,136,128,0.5);
+    color: rgba(26,26,26,0.35);
   }
   .form-group input:focus,
   .form-group textarea:focus {
@@ -777,8 +849,8 @@
 
   /* ── FOOTER ── */
   footer {
-    background: var(--black);
-    border-top: 1px solid var(--border);
+    background: #1A1A1A;
+    border-top: 1px solid rgba(255,255,255,0.08);
     padding: 64px 48px 40px;
   }
 
@@ -787,7 +859,7 @@
     justify-content: space-between;
     align-items: flex-start;
     padding-bottom: 48px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
   .footer-brand .tagline {
@@ -797,7 +869,12 @@
     text-transform: uppercase;
     margin-top: 16px;
     line-height: 1.2;
-    color: var(--off-white);
+    color: #E8E4DC;
+  }
+  .footer-logo-img {
+    width: 156px;
+    height: auto;
+    display: block;
   }
   .footer-brand .tagline span { color: var(--orange); }
 
@@ -812,12 +889,12 @@
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: #888880;
     text-decoration: none;
     transition: color 0.25s;
   }
   .footer-nav a .fn { color: var(--orange); margin-right: 8px; }
-  .footer-nav a:hover { color: var(--off-white); }
+  .footer-nav a:hover { color: #E8E4DC; }
 
   .footer-bottom {
     display: flex;
@@ -828,7 +905,7 @@
     font-size: 10px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: #888880;
   }
 
   /* Cursor crosshair in hero */
@@ -845,15 +922,557 @@
   .crosshair svg { width: 100%; height: 100%; }
   body:hover .crosshair { opacity: 1; }
 
+  /* ── CAD ASSEMBLY VIEWER ── */
+  .cad-viewer-shell {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    background: #F5F2EE;
+    border: 1px solid var(--border);
+    margin-bottom: 0;
+    overflow: hidden;
+    cursor: grab;
+  }
+  .cad-viewer-shell:active { cursor: grabbing; }
+  .cad-viewer-shell::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.055) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #cad-assembly-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+  .cad-corner {
+    position: absolute;
+    width: 18px; height: 18px;
+    z-index: 3; pointer-events: none;
+  }
+  .cad-corner--tl { top: 18px; left: 18px; border-top: 1px solid var(--orange); border-left: 1px solid var(--orange); }
+  .cad-corner--tr { top: 18px; right: 18px; border-top: 1px solid var(--orange); border-right: 1px solid var(--orange); }
+  .cad-corner--bl { bottom: 18px; left: 18px; border-bottom: 1px solid var(--orange); border-left: 1px solid var(--orange); }
+  .cad-corner--br { bottom: 18px; right: 18px; border-bottom: 1px solid var(--orange); border-right: 1px solid var(--orange); }
+
+  .cad-hud-tl {
+    position: absolute; top: 26px; left: 46px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+    color: rgba(26,26,26,0.35); text-transform: uppercase;
+    pointer-events: none; z-index: 3; line-height: 2;
+  }
+  .cad-hud-tl strong { color: var(--orange); font-weight: 500; display: block; font-size: 10px; }
+  .cad-hud-tr {
+    position: absolute; top: 26px; right: 46px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em;
+    color: rgba(26,26,26,0.25); text-transform: uppercase;
+    pointer-events: none; z-index: 3; text-align: right; line-height: 2;
+  }
+  .cad-hud-bl {
+    position: absolute; bottom: 24px; left: 46px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em;
+    color: rgba(26,26,26,0.28); text-transform: uppercase;
+    pointer-events: none; z-index: 3;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cad-status-dot {
+    width: 5px; height: 5px; background: var(--orange); border-radius: 50%;
+    animation: cadPulse 2s ease-in-out infinite; flex-shrink: 0;
+  }
+  @keyframes cadPulse { 0%,100%{opacity:0.35} 50%{opacity:1} }
+  .cad-hud-br {
+    position: absolute; bottom: 24px; right: 46px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em;
+    color: rgba(26,26,26,0.25); text-transform: uppercase;
+    pointer-events: none; z-index: 3;
+  }
+
+  /* Gear label cards */
+  .gear-labels-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid var(--border); border-top: none;
+    margin-bottom: 72px;
+  }
+  .gear-label-card {
+    padding: 28px 32px;
+    border-right: 1px solid var(--border);
+    position: relative; cursor: pointer;
+    transition: background 0.3s; overflow: hidden;
+  }
+  .gear-label-card:last-child { border-right: none; }
+  .gear-label-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: var(--orange);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .gear-label-card:hover::before,
+  .gear-label-card.active::before { transform: scaleX(1); }
+  .gear-label-card:hover { background: rgba(232,93,12,0.045); }
+  .gear-label-card.active { background: rgba(232,93,12,0.06); }
+
+  .glc-part {
+    font-family: var(--font-mono); font-size: 9px;
+    letter-spacing: 0.22em; color: var(--orange);
+    text-transform: uppercase; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .glc-part::before {
+    content: ''; display: inline-block;
+    width: 4px; height: 4px;
+    background: var(--orange); border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .glc-name {
+    font-family: var(--font-head); font-weight: 800;
+    font-size: 22px; text-transform: uppercase;
+    color: #1A1A1A; margin-bottom: 14px;
+    line-height: 1.05; letter-spacing: 0.02em;
+  }
+  .glc-spec {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; color: var(--muted); line-height: 2.1;
+  }
+  .glc-spec span { color: rgba(26,26,26,0.6); }
+  .glc-badge {
+    display: inline-block; margin-top: 14px;
+    font-family: var(--font-mono); font-size: 9px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--orange); border: 1px solid rgba(232,93,12,0.38);
+    padding: 4px 10px;
+  }
+
+  /* Services sub-header */
+  .caps-sub-label {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.22em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .caps-sub-label::before {
+    content: ''; display: block;
+    width: 28px; height: 1px; background: var(--border);
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     MANUFACTURING PROCESS SECTION — scroll-scrubbed video
+     ───────────────────────────────────────────────────────── */
+  #manufacturing-section {
+    position: relative;
+    height: 500vh;
+    background: #1A1A1A;
+  }
+
+  .mfg-pin-wrap {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #111111;
+  }
+
+  .mfg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+  .mfg-video.ready { opacity: 1; }
+
+  /* Global scroll progress line — top of pinned panel */
+  .mfg-global-bar {
+    display: none;
+  }
+  .mfg-global-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #E85D0C 0%, #F26522 60%, #ff9a5c 100%);
+    box-shadow: 0 0 10px rgba(242,101,34,0.8), 0 0 2px rgba(242,101,34,0.4);
+    will-change: width;
+  }
+
+  .mfg-video-tint {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(7,7,7,0.88) 0%,
+      rgba(7,7,7,0.16) 52%,
+      rgba(7,7,7,0.65) 100%
+    );
+    pointer-events: none;
+    will-change: background;
+    transition: background 1.1s ease;
+  }
+
+  .mfg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+    opacity: 0.65;
+  }
+
+  .mfg-stage {
+    position: absolute;
+    top: 50%;
+    left: 8vw;
+    transform: translateY(-50%);
+    width: min(520px, 44vw);
+    opacity: 0;
+    will-change: transform, opacity;
+    pointer-events: none;
+  }
+  /* Right-aligned variant (even stages) */
+  .mfg-stage--right {
+    left: auto;
+    right: 8vw;
+    text-align: left; /* keep text left-aligned for readability */
+  }
+  .mfg-stage--right .mfg-stage-label { flex-direction: row-reverse; }
+  .mfg-stage--right .mfg-stage-label::before { display: none; }
+  .mfg-stage--right .mfg-stage-label::after {
+    content: '';
+    width: 36px; height: 1px;
+    background: #F26522;
+    display: block; flex-shrink: 0;
+  }
+
+  .mfg-stage-num {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: clamp(84px, 9vw, 130px);
+    line-height: 0.88;
+    color: #F26522;
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 8px;
+    text-shadow: 0 0 80px rgba(242,101,34,0.2);
+  }
+
+  .mfg-stage-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    color: rgba(242,101,34,0.72);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mfg-stage-label::before {
+    content: '';
+    width: 36px; height: 1px;
+    background: #F26522;
+    display: block; flex-shrink: 0;
+  }
+
+  .mfg-stage-name {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(30px, 3.6vw, 50px);
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1.12;
+    letter-spacing: 0.01em;
+    margin-bottom: 20px;
+    overflow: visible;
+  }
+
+  .mfg-stage-desc {
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.78;
+    color: rgba(232,228,220,0.56);
+    max-width: 400px;
+    margin-bottom: 28px;
+  }
+
+  .mfg-progress-track {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+    margin-top: 8px;
+  }
+  .mfg-progress-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 0%;
+    background: linear-gradient(90deg, #F26522, #ff8c44);
+    box-shadow: 0 0 10px rgba(242,101,34,0.55);
+    will-change: width;
+  }
+
+  /* Spec pills */
+  .mfg-specs {
+    position: absolute;
+    top: 50%;
+    right: 7vw;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+  /* Left-side pills (for right-aligned stages) */
+  .mfg-specs--left {
+    right: auto;
+    left: 7vw;
+  }
+
+  .mfg-spec-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #F26522;
+    border: 1px solid rgba(242,101,34,0.4);
+    background: rgba(10,10,10,0.82);
+    backdrop-filter: blur(10px);
+    padding: 10px 18px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(44px);
+    will-change: transform, opacity;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .mfg-spec-pill::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: #F26522;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px #F26522;
+  }
+
+  /* Side nav dots */
+  .mfg-side-dots {
+    position: absolute;
+    right: 2.8vw;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 10;
+  }
+  .mfg-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 0.18;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.3s, background 0.3s, box-shadow 0.3s;
+    transform-origin: center;
+  }
+  .mfg-dot.active {
+    background: #F26522;
+    opacity: 1;
+    transform: scale(1.8);
+    box-shadow: 0 0 12px rgba(242,101,34,0.65);
+  }
+
+  /* Bottom strip */
+  .mfg-bottom-strip {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 64px;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 8;
+    padding: 0 6vw;
+  }
+
+  .mfg-strip-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    max-width: 240px;
+  }
+
+  .mfg-strip-num {
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 15px;
+    color: rgba(255,255,255,0.1);
+    margin-right: 9px;
+    flex-shrink: 0;
+    transition: color 0.4s;
+    line-height: 1;
+  }
+  .mfg-strip-item.active .mfg-strip-num { color: #F26522; }
+
+  .mfg-strip-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.22);
+    transition: color 0.4s;
+    white-space: nowrap;
+  }
+  .mfg-strip-item.active .mfg-strip-label { color: #F26522; }
+
+  .mfg-strip-connector {
+    flex: 1;
+    height: 1px;
+    position: relative;
+    margin: 0 6px;
+    min-width: 20px;
+    max-width: 80px;
+  }
+  .mfg-strip-connector svg {
+    position: absolute;
+    left: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 100%; height: 10px;
+    overflow: visible;
+  }
+  .conn-bg {
+    stroke: rgba(255,255,255,0.07);
+    stroke-width: 1;
+    stroke-dasharray: 3 4;
+    fill: none;
+  }
+  .conn-active {
+    stroke: #F26522;
+    stroke-width: 1.2;
+    stroke-dasharray: 3 4;
+    stroke-dashoffset: 100;
+    fill: none;
+    transition: stroke-dashoffset 0.4s ease;
+  }
+  .mfg-strip-connector.lit .conn-active { stroke-dashoffset: 0; }
+
+  /* Corner brackets */
+  .mfg-bracket {
+    position: absolute;
+    width: 20px; height: 20px;
+    pointer-events: none;
+    z-index: 6;
+  }
+  .mfg-bracket--tl { top: 20px; left: 20px; border-top: 1px solid rgba(242,101,34,0.55); border-left: 1px solid rgba(242,101,34,0.55); }
+  .mfg-bracket--tr { display: none; }
+  .mfg-bracket--bl { bottom: 82px; left: 20px; border-bottom: 1px solid rgba(242,101,34,0.55); border-left: 1px solid rgba(242,101,34,0.55); }
+  .mfg-bracket--br { bottom: 82px; right: 20px; border-bottom: 1px solid rgba(242,101,34,0.55); border-right: 1px solid rgba(242,101,34,0.55); }
+
+  /* Top HUD */
+  .mfg-hud-top {
+    display: none;
+  }
+  .mfg-hud-top-inner {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(10,10,10,0.65);
+    backdrop-filter: blur(10px);
+    padding: 7px 22px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .mfg-hud-sep { color: rgba(242,101,34,0.35); }
+  .mfg-hud-hi { color: rgba(242,101,34,0.6); }
+
+  /* Time counter readout */
+  .mfg-timecode {
+    display: none;
+  }
+
+  /* ── Mobile cards ── */
+  .mfg-mobile-cards { display: none; }
+
+  @media (max-width: 768px) {
+    #manufacturing-section { height: auto; }
+    .mfg-pin-wrap { display: none; }
+    .mfg-mobile-cards {
+      display: flex;
+      flex-direction: column;
+    }
+    .mfg-mobile-card {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 40px 24px 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: #111111;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .mfg-mobile-card.vis {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .mfg-mobile-num {
+      font-family: var(--font-head); font-weight: 900;
+      font-size: 72px; color: #F26522;
+      line-height: 0.9; margin-bottom: 8px;
+    }
+    .mfg-mobile-name {
+      font-family: var(--font-head); font-weight: 800;
+      font-size: 28px; text-transform: uppercase;
+      color: #fff; margin-bottom: 14px;
+    }
+    .mfg-mobile-desc {
+      font-size: 14px; line-height: 1.75;
+      color: rgba(232,228,220,0.56); margin-bottom: 18px;
+    }
+    .mfg-mobile-rule {
+      width: 100%; height: 1px;
+      background: rgba(242,101,34,0.35);
+      margin-bottom: 18px;
+    }
+    .mfg-mobile-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mfg-mobile-pill {
+      font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: #F26522; border: 1px solid rgba(242,101,34,0.38);
+      padding: 6px 12px; background: rgba(7,7,7,0.6);
+    }
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 1100px) {
     .caps-grid { grid-template-columns: repeat(2, 1fr); }
     .cap-card { border-bottom: 1px solid var(--border); }
     .industries-grid { grid-template-columns: repeat(3, 1fr); }
     .ind-card { border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .gear-labels-row { grid-template-columns: 1fr 1fr; }
+    .gear-label-card:last-child { border-top: 1px solid var(--border); border-right: none; }
+    .cad-viewer-shell { height: 420px; }
   }
   @media (max-width: 800px) {
     nav { padding: 0 24px; }
+    .nav-logo { width: 190px; height: 48px; }
+    .nav-logo-img { transform: scale(1.22); }
     .nav-links { display: none; }
     .hero-content { padding: 100px 24px 60px; }
     #hero-canvas { width: 100%; opacity: 0.3; }
@@ -887,14 +1506,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
-    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="18" cy="18" r="8" stroke="#E85D0C" stroke-width="1.5"/>
-      <circle cx="18" cy="18" r="3.5" fill="#E85D0C"/>
-      <path d="M18 2v4M18 30v4M2 18h4M30 18h4M6.1 6.1l2.83 2.83M27.07 27.07l2.83 2.83M6.1 29.9l2.83-2.83M27.07 8.93l2.83-2.83" stroke="#E85D0C" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M15 18a3 3 0 106 0 3 3 0 00-6 0z" fill="none"/>
-      <path d="M14 16h-2l-1-2 2-2 2 1M22 16h2l1-2-2-2-2 1M14 20h-2l-1 2 2 2 2-1M22 20h2l1 2-2 2-2-1" stroke="#E85D0C" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <div class="nav-logo-text">NEXA<span>Transmission</span></div>
+    <img src="Artboard 42 copy@350x-8 (1).png" alt="Nexa Transmission" class="nav-logo-img" />
   </a>
   <ul class="nav-links">
     <li><a href="#introduction"><span class="num">01</span>Introduction</a></li>
@@ -907,6 +1519,232 @@
     <span>Enquire</span>
   </a>
 </nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MANUFACTURING PROCESS — scroll-scrubbed video
+     Source: download (2).mp4  |  Duration: 21.6s
+     4 stages × 100vh scroll travel = 400vh pinned travel
+     ═══════════════════════════════════════════════════════════ -->
+<div id="manufacturing-section">
+
+  <!-- ── Desktop: sticky pinned panel ── -->
+  <div class="mfg-pin-wrap" id="mfg-pin">
+
+    <!-- Video (lazy-loaded, then scrubbed by GSAP) -->
+    <video
+      id="mfg-video"
+      class="mfg-video"
+      muted
+      playsinline
+      preload="auto"
+      aria-hidden="true"
+    >
+      <source src="download (2).mp4" type="video/mp4" />
+    </video>
+
+    <!-- Tint + grid overlays -->
+    <div class="mfg-video-tint"></div>
+    <div class="mfg-grid"></div>
+
+    <!-- Corner brackets -->
+    <div class="mfg-bracket mfg-bracket--tl"></div>
+    <div class="mfg-bracket mfg-bracket--tr"></div>
+    <div class="mfg-bracket mfg-bracket--bl"></div>
+    <div class="mfg-bracket mfg-bracket--br"></div>
+
+    <!-- Top HUD -->
+    <div class="mfg-hud-top">
+      <div class="mfg-hud-top-inner">
+        <span class="mfg-hud-hi">Nexa Transmission</span>
+        <span class="mfg-hud-sep">/</span>
+        <span>Manufacturing Process</span>
+        <span class="mfg-hud-sep">/</span>
+        <span>Raipur · CG · India</span>
+        <span class="mfg-hud-sep">/</span>
+        <span>4 Stages</span>
+      </div>
+    </div>
+
+    <!-- Timecode readout -->
+    <div class="mfg-timecode" id="mfg-timecode">00:00.0</div>
+
+    <!-- Global scroll progress bar -->
+    <div class="mfg-global-bar"><div class="mfg-global-fill" id="mfg-global-fill"></div></div>
+
+    <!-- ── Stage 1: Machine Shop ── -->
+    <div class="mfg-stage" id="mfg-s1">
+      <span class="mfg-stage-num">01</span>
+      <p class="mfg-stage-label">Stage One &nbsp;·&nbsp; Raw Material to Blank</p>
+      <h2 class="mfg-stage-name">Machine Shop</h2>
+      <p class="mfg-stage-desc">
+        Blanks turned, bored and faced on TOS precision lathes — centreline tolerances held to ±0.005 mm before gear cutting begins.
+      </p>
+      <div class="mfg-progress-track"><div class="mfg-progress-fill" id="mfg-p1"></div></div>
+    </div>
+
+    <!-- ── Stage 2: Heat Treatment ── -->
+    <div class="mfg-stage mfg-stage--right" id="mfg-s2">
+      <span class="mfg-stage-num">02</span>
+      <p class="mfg-stage-label">Stage Two &nbsp;·&nbsp; Hardening</p>
+      <h2 class="mfg-stage-name">Heat Treatment</h2>
+      <p class="mfg-stage-desc">
+        Case carburising at 920°C followed by oil quench — achieving HRC 58–62 case hardness while preserving a tough core for impact resistance.
+      </p>
+      <div class="mfg-progress-track"><div class="mfg-progress-fill" id="mfg-p2"></div></div>
+    </div>
+
+    <!-- ── Stage 3: Gear Grinding ── -->
+    <div class="mfg-stage" id="mfg-s3">
+      <span class="mfg-stage-num">03</span>
+      <p class="mfg-stage-label">Stage Three &nbsp;·&nbsp; Finish Grinding</p>
+      <h2 class="mfg-stage-name">Gear Grinding</h2>
+      <p class="mfg-stage-desc">
+        Post-hardening profile grinding on the HÖFLER to DIN class 4–5 — correcting distortion and delivering sub-micron involute accuracy.
+      </p>
+      <div class="mfg-progress-track"><div class="mfg-progress-fill" id="mfg-p3"></div></div>
+    </div>
+
+    <!-- ── Stage 4: Testing & Measuring ── -->
+    <div class="mfg-stage mfg-stage--right" id="mfg-s4">
+      <span class="mfg-stage-num">04</span>
+      <p class="mfg-stage-label">Stage Four &nbsp;·&nbsp; Quality Gate</p>
+      <h2 class="mfg-stage-name">Testing &amp; Measuring</h2>
+      <p class="mfg-stage-desc">
+        CMM dimensional verification, gear-roll testing and surface-finish measurement — every gear signed off by a qualified engineer before despatch.
+      </p>
+      <div class="mfg-progress-track"><div class="mfg-progress-fill" id="mfg-p4"></div></div>
+    </div>
+
+    <!-- ── Spec pills (one group per stage) ── -->
+    <div class="mfg-specs" id="mfg-sp1">
+      <div class="mfg-spec-pill">Ø 20–500 mm range</div>
+      <div class="mfg-spec-pill">±0.005 mm tolerance</div>
+      <div class="mfg-spec-pill">20MnCr5 · En353</div>
+      <div class="mfg-spec-pill">In-house facing &amp; boring</div>
+    </div>
+    <div class="mfg-specs mfg-specs--left" id="mfg-sp2">
+      <div class="mfg-spec-pill">Max 950 °C carburising</div>
+      <div class="mfg-spec-pill">HRC 58–62 case</div>
+      <div class="mfg-spec-pill">15,000 L quench tank</div>
+      <div class="mfg-spec-pill">Tough core preserved</div>
+    </div>
+    <div class="mfg-specs" id="mfg-sp3">
+      <div class="mfg-spec-pill">DIN Class 4–5</div>
+      <div class="mfg-spec-pill">HÖFLER grinding</div>
+      <div class="mfg-spec-pill">Ra ≤ 0.8 µm</div>
+      <div class="mfg-spec-pill">Involute profile grinding</div>
+    </div>
+    <div class="mfg-specs mfg-specs--left" id="mfg-sp4">
+      <div class="mfg-spec-pill">CMM verification</div>
+      <div class="mfg-spec-pill">Gear-roll tester</div>
+      <div class="mfg-spec-pill">Surface profilometer</div>
+      <div class="mfg-spec-pill">Engineer sign-off</div>
+    </div>
+
+    <!-- ── Side progress dots ── -->
+    <div class="mfg-side-dots">
+      <div class="mfg-dot active" data-stage="0" title="Machine Shop"></div>
+      <div class="mfg-dot" data-stage="1" title="Heat Treatment"></div>
+      <div class="mfg-dot" data-stage="2" title="Gear Grinding"></div>
+      <div class="mfg-dot" data-stage="3" title="Testing & Measuring"></div>
+    </div>
+
+    <!-- ── Bottom timeline strip ── -->
+    <div class="mfg-bottom-strip">
+      <div class="mfg-strip-item active" data-strip="0">
+        <span class="mfg-strip-num">01</span>
+        <span class="mfg-strip-label">Machine Shop</span>
+      </div>
+
+      <div class="mfg-strip-connector" id="mfg-conn-1">
+        <svg preserveAspectRatio="none" viewBox="0 0 100 1">
+          <line class="conn-bg" x1="0" y1="0.5" x2="100" y2="0.5"/>
+          <line class="conn-active" x1="0" y1="0.5" x2="100" y2="0.5"/>
+        </svg>
+      </div>
+
+      <div class="mfg-strip-item" data-strip="1">
+        <span class="mfg-strip-num">02</span>
+        <span class="mfg-strip-label">Heat Treatment</span>
+      </div>
+
+      <div class="mfg-strip-connector" id="mfg-conn-2">
+        <svg preserveAspectRatio="none" viewBox="0 0 100 1">
+          <line class="conn-bg" x1="0" y1="0.5" x2="100" y2="0.5"/>
+          <line class="conn-active" x1="0" y1="0.5" x2="100" y2="0.5"/>
+        </svg>
+      </div>
+
+      <div class="mfg-strip-item" data-strip="2">
+        <span class="mfg-strip-num">03</span>
+        <span class="mfg-strip-label">Gear Grinding</span>
+      </div>
+
+      <div class="mfg-strip-connector" id="mfg-conn-3">
+        <svg preserveAspectRatio="none" viewBox="0 0 100 1">
+          <line class="conn-bg" x1="0" y1="0.5" x2="100" y2="0.5"/>
+          <line class="conn-active" x1="0" y1="0.5" x2="100" y2="0.5"/>
+        </svg>
+      </div>
+
+      <div class="mfg-strip-item" data-strip="3">
+        <span class="mfg-strip-num">04</span>
+        <span class="mfg-strip-label">Testing &amp; Measuring</span>
+      </div>
+    </div>
+
+  </div><!-- /.mfg-pin-wrap -->
+
+  <!-- ── Mobile: vertical card stack (no scrubbed video) ── -->
+  <div class="mfg-mobile-cards" id="mfg-mobile">
+    <div class="mfg-mobile-card">
+      <div class="mfg-mobile-num">01</div>
+      <div class="mfg-mobile-name">Machine Shop</div>
+      <p class="mfg-mobile-desc">Blanks turned, bored and faced on TOS precision lathes — centreline tolerances held to ±0.005 mm before gear cutting begins.</p>
+      <div class="mfg-mobile-rule"></div>
+      <div class="mfg-mobile-pills">
+        <span class="mfg-mobile-pill">Ø 20–500 mm</span>
+        <span class="mfg-mobile-pill">±0.005 mm</span>
+        <span class="mfg-mobile-pill">20MnCr5</span>
+      </div>
+    </div>
+    <div class="mfg-mobile-card">
+      <div class="mfg-mobile-num">02</div>
+      <div class="mfg-mobile-name">Heat Treatment</div>
+      <p class="mfg-mobile-desc">Case carburising at 920°C followed by oil quench — achieving HRC 58–62 case hardness while preserving a tough core.</p>
+      <div class="mfg-mobile-rule"></div>
+      <div class="mfg-mobile-pills">
+        <span class="mfg-mobile-pill">Max 950 °C</span>
+        <span class="mfg-mobile-pill">HRC 58–62</span>
+        <span class="mfg-mobile-pill">15,000 L quench</span>
+      </div>
+    </div>
+    <div class="mfg-mobile-card">
+      <div class="mfg-mobile-num">03</div>
+      <div class="mfg-mobile-name">Gear Grinding</div>
+      <p class="mfg-mobile-desc">Post-hardening profile grinding on the HÖFLER to DIN class 4–5 — delivering sub-micron involute accuracy.</p>
+      <div class="mfg-mobile-rule"></div>
+      <div class="mfg-mobile-pills">
+        <span class="mfg-mobile-pill">DIN Class 4–5</span>
+        <span class="mfg-mobile-pill">Ra ≤ 0.8 µm</span>
+        <span class="mfg-mobile-pill">HÖFLER</span>
+      </div>
+    </div>
+    <div class="mfg-mobile-card">
+      <div class="mfg-mobile-num">04</div>
+      <div class="mfg-mobile-name">Testing &amp; Measuring</div>
+      <p class="mfg-mobile-desc">CMM dimensional verification, gear-roll testing and surface-finish measurement — every gear signed off by an engineer.</p>
+      <div class="mfg-mobile-rule"></div>
+      <div class="mfg-mobile-pills">
+        <span class="mfg-mobile-pill">CMM</span>
+        <span class="mfg-mobile-pill">Gear-roll tester</span>
+        <span class="mfg-mobile-pill">Engineer sign-off</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#manufacturing-section -->
 
 <!-- HERO -->
 <section id="hero">
@@ -945,7 +1783,7 @@
 <section id="introduction">
   <div class="section-header reveal">
     <p class="section-label">01 / Introduction</p>
-    <h2 class="title" style="color:var(--black);">What We Do.</h2>
+    <h2 class="title" style="color:#1A1A1A;">What We Do.</h2>
     <div class="section-rule"></div>
     <p class="subtitle">Engineering &nbsp;·&nbsp; Manufacturing &nbsp;·&nbsp; Refurbishment</p>
   </div>
@@ -969,77 +1807,78 @@
     <p class="section-label">02 / Capabilities</p>
     <h2 class="title">What We Build.</h2>
     <div class="section-rule"></div>
-    <p class="subtitle" style="color:var(--muted)">Four Core Services</p>
+    <p class="subtitle" style="color:var(--muted)">CAD-Verified Assembly &nbsp;·&nbsp; Assem1.SLDASM &nbsp;·&nbsp; Three Precision Components</p>
   </div>
-  <div class="caps-grid">
-    <div class="cap-card reveal reveal-delay-1">
-      <div class="cap-icon">
-        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="10"/><circle cx="22" cy="22" r="4"/><path d="M22 4v6M22 34v6M4 22h6M34 22h6M8.7 8.7l4.24 4.24M31.07 31.07l4.24 4.24M8.7 35.3l4.24-4.24M31.07 12.93l4.24-4.24"/></svg>
-      </div>
-      <span class="cap-num">— 01</span>
-      <h3 class="cap-title">Gearbox Spares to OEM Standard</h3>
-      <p class="cap-desc">Drop-in replacement gears, shafts and sub-assemblies engineered to match original OEM specification — dimensional, metallurgical and functional.</p>
+
+  <!-- 3D CAD Assembly Viewer — sourced from GEAR 4 / 5 / 6 .SLDPRT + Assem1.SLDASM -->
+  <div class="cad-viewer-shell reveal">
+    <canvas id="cad-assembly-canvas"></canvas>
+    <div class="cad-corner cad-corner--tl"></div>
+    <div class="cad-corner cad-corner--tr"></div>
+    <div class="cad-corner cad-corner--bl"></div>
+    <div class="cad-corner cad-corner--br"></div>
+    <div class="cad-hud-tl">
+      <strong>Assem1.SLDASM</strong>
+      3-Gear Precision Train &nbsp;·&nbsp; Parallel Shaft<br>
+      SolidWorks Origin &nbsp;·&nbsp; ACIS Kernel
     </div>
-    <div class="cap-card reveal reveal-delay-2">
-      <div class="cap-icon">
-        <svg viewBox="0 0 44 44"><rect x="4" y="14" width="14" height="16" rx="1"/><rect x="26" y="14" width="14" height="16" rx="1"/><path d="M18 22h8M22 18l4 4-4 4"/></svg>
-      </div>
-      <span class="cap-num">— 02</span>
-      <h3 class="cap-title">Gearbox 1:1 Replacement</h3>
-      <p class="cap-desc">Form, fit and function equivalent gearboxes — reverse-engineered to dimensional envelopes and torque ratings, without re-piping or re-aligning.</p>
+    <div class="cad-hud-tr">
+      GEAR-04 &nbsp;·&nbsp; GEAR-05 &nbsp;·&nbsp; GEAR-06<br>
+      Ratio 3:1 &nbsp;·&nbsp; Module M4 &nbsp;·&nbsp; PA 20°<br>
+      HRC 58–62 &nbsp;·&nbsp; 20MnCr5
     </div>
-    <div class="cap-card reveal reveal-delay-3">
-      <div class="cap-icon">
-        <svg viewBox="0 0 44 44"><path d="M22 8l14 8v16l-14 8-14-8V16z"/><circle cx="22" cy="22" r="5"/><path d="M22 17v-9M22 27v9M17 22H8M27 22h9"/></svg>
-      </div>
-      <span class="cap-num">— 03</span>
-      <h3 class="cap-title">Gearbox Refurbishment</h3>
-      <p class="cap-desc">End-of-life drives restored to new condition — strip, NDT inspection, re-gearing, re-bearing and load-test — at a fraction of new-unit cost and lead time.</p>
+    <div class="cad-hud-bl">
+      <span class="cad-status-dot"></span>
+      <span>CAD model active &nbsp;·&nbsp; Live render</span>
     </div>
-    <div class="cap-card reveal reveal-delay-4">
-      <div class="cap-icon">
-        <svg viewBox="0 0 44 44"><polyline points="4,34 14,20 22,28 30,14 40,10"/><circle cx="40" cy="10" r="2.5"/><path d="M4 38h36"/></svg>
-      </div>
-      <span class="cap-num">— 04</span>
-      <h3 class="cap-title">Preventive Maintenance Suite</h3>
-      <p class="cap-desc">AI-enabled condition monitoring and scheduled service — vibration, thermal and wear-pattern analysis that flags failure modes before they interrupt production.</p>
-      <span class="cap-badge">AI-Enabled</span>
+    <div class="cad-hud-br">⟳ Drag to orbit &nbsp;·&nbsp; Scroll to zoom</div>
+  </div>
+
+  <!-- Gear Specification Cards -->
+  <div class="gear-labels-row">
+    <div class="gear-label-card" data-gear="4">
+      <p class="glc-part">Part 01 &nbsp;/&nbsp; GEAR 4.SLDPRT</p>
+      <h4 class="glc-name">Driver Gear</h4>
+      <p class="glc-spec">
+        Teeth: <span>60T</span> &nbsp;·&nbsp; Module: <span>M4</span><br>
+        PCD: <span>240 mm</span> &nbsp;·&nbsp; OD: <span>248 mm</span><br>
+        Face Width: <span>65 mm</span><br>
+        Material: <span>20MnCr5 · HRC 58–62</span>
+      </p>
+      <span class="glc-badge">Large Gear</span>
+    </div>
+    <div class="gear-label-card" data-gear="5">
+      <p class="glc-part">Part 02 &nbsp;/&nbsp; GEAR 5.SLDPRT</p>
+      <h4 class="glc-name">Intermediate Pinion</h4>
+      <p class="glc-spec">
+        Teeth: <span>20T</span> &nbsp;·&nbsp; Module: <span>M4</span><br>
+        PCD: <span>80 mm</span> &nbsp;·&nbsp; OD: <span>88 mm</span><br>
+        Face Width: <span>65 mm</span><br>
+        Gear Ratio: <span>3:1 with Driver</span>
+      </p>
+      <span class="glc-badge">Pinion</span>
+    </div>
+    <div class="gear-label-card" data-gear="6">
+      <p class="glc-part">Part 03 &nbsp;/&nbsp; GEAR 6.SLDPRT</p>
+      <h4 class="glc-name">Driven Gear</h4>
+      <p class="glc-spec">
+        Teeth: <span>60T</span> &nbsp;·&nbsp; Module: <span>M4</span><br>
+        PCD: <span>240 mm</span> &nbsp;·&nbsp; OD: <span>248 mm</span><br>
+        Face Width: <span>65 mm</span><br>
+        Material: <span>20MnCr5 · HRC 58–62</span>
+      </p>
+      <span class="glc-badge">Large Gear</span>
     </div>
   </div>
+
 </section>
 
-<!-- SHOP FLOOR -->
-<section id="shopfloor">
-  <div class="section-header reveal">
-    <p class="section-label">02 / Shop Floor</p>
-    <h2 class="title">Plant &amp; Machines.</h2>
-    <div class="section-rule"></div>
-    <p class="subtitle" style="color:var(--muted)">Plant &nbsp;·&nbsp; Machines &nbsp;·&nbsp; Precision</p>
-  </div>
-  <p class="shopfloor-intro reveal reveal-delay-1">
-    A fully integrated precision workshop — <span class="hi">gear cutting, grinding, heat treatment and fabrication</span> under one roof, equipped with machines from the benchmark makers of their categories.
-  </p>
-  <div class="machine-list reveal reveal-delay-2">
-    <div class="machine-row"><span class="machine-num">M/01</span><span class="machine-name">CNC Gear Hobbing</span><span class="machine-brand">GLEASON</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/02</span><span class="machine-name">CNC Gear Grinding</span><span class="machine-brand">HÖFLER</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/03</span><span class="machine-name">CNC Gear Shaper</span><span class="machine-brand coming">LIEBHERR · DEC 2026</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/04</span><span class="machine-name">Heat Treatment Facility</span><span class="machine-brand">IN-HOUSE</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/05</span><span class="machine-name">Surface Grinding</span><span class="machine-brand">CHEVALIER</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/06</span><span class="machine-name">Shaft Grinding — OD &amp; ID</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/07</span><span class="machine-name">Keyway Milling</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/08</span><span class="machine-name">Vertical Milling</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/09</span><span class="machine-name">Radial Drill</span><span class="machine-brand">RABOMA</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/10</span><span class="machine-name">Horizontal Boring Machine</span><span class="machine-brand">GRAFFENSTADEN</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/11</span><span class="machine-name">Hydraulic Presses — 350T &amp; 150T</span><span class="machine-brand">IN-HOUSE</span><span class="machine-arrow">→</span></div>
-    <div class="machine-row"><span class="machine-num">M/12</span><span class="machine-name">Precision Lathes</span><span class="machine-brand">TOS</span><span class="machine-arrow">→</span></div>
-  </div>
-</section>
 
 <!-- INDUSTRIES -->
 <section id="industries">
   <div class="section-header reveal">
     <p class="section-label">03 / Industries</p>
-    <h2 class="title" style="color:var(--black);">Where Our Gears Turn.</h2>
+    <h2 class="title" style="color:#1A1A1A;">Where Our Gears Turn.</h2>
     <div class="section-rule"></div>
     <p class="subtitle">Five Core Sectors</p>
   </div>
@@ -1097,6 +1936,7 @@
   </div>
   <div class="contact-layout">
     <div class="contact-left reveal reveal-delay-1">
+      <img src="Artboard 42 copy@350x-8 (1).png" alt="Nexa Transmission" class="contact-logo-img" />
       <span class="big-num">20<sup style="font-size:0.35em;vertical-align:super">+</sup></span>
       <p class="big-sub">engineers, specialists and <span>industry veterans</span> on the bench.</p>
       <div class="contact-rule"></div>
@@ -1138,19 +1978,10 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <svg width="40" height="40" viewBox="0 0 36 36" fill="none">
-        <circle cx="18" cy="18" r="8" stroke="#E85D0C" stroke-width="1.5"/>
-        <circle cx="18" cy="18" r="3.5" fill="#E85D0C"/>
-        <path d="M18 2v4M18 30v4M2 18h4M30 18h4M6.1 6.1l2.83 2.83M27.07 27.07l2.83 2.83M6.1 29.9l2.83-2.83M27.07 8.93l2.83-2.83" stroke="#E85D0C" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
+      <img src="Artboard 42 copy@350x-8 (1).png" alt="Nexa Transmission" class="footer-logo-img" />
       <div class="tagline">Precision Gears.<br><span>Quality Without Compromise.</span></div>
     </div>
-    <nav class="footer-nav">
-      <a href="#introduction"><span class="fn">01</span> Introduction</a>
-      <a href="#capabilities"><span class="fn">02</span> Capabilities</a>
-      <a href="#industries"><span class="fn">03</span> Industries</a>
-      <a href="#contact"><span class="fn">04</span> Contact</a>
-    </nav>
+   
   </div>
   <div class="footer-bottom">
     <span>© 2026 Nexa Transmission LLP · All Rights Reserved</span>
@@ -1201,6 +2032,7 @@ function handleSubmit(e) {
   renderer.setClearColor(0x000000, 0);
 
   const scene = new THREE.Scene();
+  const masterGroup = new THREE.Group(); /* moves everything together on scroll */
   const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
   camera.position.set(0, 0, 18);
 
@@ -1288,7 +2120,7 @@ function handleSubmit(e) {
   bigGroup.add(bigGear);
   bigGroup.add(bigWire);
   bigGroup.position.set(-1.5, 1.2, 0);
-  scene.add(bigGroup);
+  masterGroup.add(bigGroup);
 
   /* ── Small pinion ── */
   const smallGeoSolid = createGearGeometry(14, 2.7, 2.2, 2.2, 0.55, 0.28);
@@ -1307,14 +2139,14 @@ function handleSubmit(e) {
   /* Position pinion to mesh with big gear */
   const meshDist = 4.6 + 2.7 - 0.22; /* slight overlap for mesh illusion */
   smallGroup.position.set(-1.5 + meshDist, 1.2, 0);
-  scene.add(smallGroup);
+  masterGroup.add(smallGroup);
 
   /* ── Blueprint dimension lines ── */
   function addDimLine(x1, y1, x2, y2) {
     const pts = [new THREE.Vector3(x1, y1, 0.1), new THREE.Vector3(x2, y2, 0.1)];
     const geo = new THREE.BufferGeometry().setFromPoints(pts);
     const mat = new THREE.LineBasicMaterial({ color: 0x334455, transparent: true, opacity: 0.35 });
-    scene.add(new THREE.Line(geo, mat));
+    masterGroup.add(new THREE.Line(geo, mat));
   }
   addDimLine(-8, -5, 8, -5);
   addDimLine(-8, -5, -8, 5);
@@ -1328,7 +2160,7 @@ function handleSubmit(e) {
       [new THREE.Vector3(x - size, y, 0.2), new THREE.Vector3(x + size, y, 0.2)],
       [new THREE.Vector3(x, y - size, 0.2), new THREE.Vector3(x, y + size, 0.2)]
     ].forEach(pts => {
-      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
+      masterGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), mat));
     });
   }
   addCross(-1.5, 1.2, 0.6, ORANGE, 0.5);
@@ -1342,42 +2174,840 @@ function handleSubmit(e) {
       pts.push(new THREE.Vector3(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 0.15));
     }
     const geo = new THREE.BufferGeometry().setFromPoints(pts);
-    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: op })));
+    masterGroup.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: op })));
   }
   addCircle(-1.5, 1.2, 4.6, 0x334455, 0.25);
   addCircle(-1.5 + meshDist, 1.2, 2.7, 0x334455, 0.2);
 
-  /* ── Hover pause ── */
-  let paused = false;
-  const heroSection = document.getElementById('hero');
-  heroSection.addEventListener('mouseenter', () => { paused = true; });
-  heroSection.addEventListener('mouseleave', () => { paused = false; });
+  /* Commit masterGroup to scene once all geometry is built */
+  scene.add(masterGroup);
 
-  /* ── Animation loop ── */
-  let t = 0;
-  const BIG_SPEED = 0.003;
-  const SMALL_SPEED = BIG_SPEED * (24 / 14); /* gear ratio */
+  /* ── Animation: scroll-driven rotation + canvas drift through hero→intro→industries ── */
+  let gearAngle  = 0;
+  let floatT     = 0;
+  let smoothP    = 0;
+  let lastScrollY = window.scrollY;
+  const BIG_SPEED = 0.012;  /* radians per pixel scrolled */
 
-  function animate() {
-    requestAnimationFrame(animate);
-    if (!paused) {
-      t += 1;
-      bigGroup.rotation.z = t * BIG_SPEED;
-      smallGroup.rotation.z = -(t * SMALL_SPEED) + (Math.PI / 14); /* phase offset for mesh */
+  /*
+   * Progress: 0 = hero in view, 1 = industries fully in view.
+   * Broken into two equal halves:
+   *   0–0.5 : hero bottom exits → intro centre
+   *   0.5–1 : intro bottom exits → industries centre
+   */
+  function getRawProgress() {
+    const hero  = document.getElementById('hero');
+    const intro = document.getElementById('introduction');
+    const ind   = document.getElementById('industries');
+    if (!hero || !intro || !ind) return 0;
+
+    const sy = window.scrollY;
+    const phase1Start = hero.offsetTop  + hero.offsetHeight  * 0.15;
+    const phase1End   = intro.offsetTop + intro.offsetHeight * 0.5;
+    const phase2Start = phase1End;
+    const phase2End   = ind.offsetTop   + ind.offsetHeight   * 0.4;
+
+    if (sy <= phase1Start) return 0;
+    if (sy <= phase1End)   return 0.5 * (sy - phase1Start) / (phase1End - phase1Start);
+    if (sy <= phase2End)   return 0.5 + 0.5 * (sy - phase2Start) / (phase2End - phase2Start);
+    return 1;
+  }
+
+  /* Opacity: visible only in TRANSITION zones between sections, not during sections */
+  function getOpacity() {
+    const hero  = document.getElementById('hero');
+    const intro = document.getElementById('introduction');
+    const caps  = document.getElementById('capabilities');
+    const ind   = document.getElementById('industries');
+    const contact = document.getElementById('contact');
+    if (!hero) return 0;
+
+    const vh = window.innerHeight;
+    const centerY = vh * 0.5; /* viewport center line */
+
+    /* Fade in as hero exits top */
+    const heroR = hero.getBoundingClientRect();
+    const fadeIn = Math.min(1, Math.max(0, (vh - heroR.top) / (vh * 0.45)));
+
+    /* Fade out when intro is centered (±30% viewport around center) */
+    let introDim = 1;
+    if (intro) {
+      const r = intro.getBoundingClientRect();
+      const introCenter = r.top + r.height * 0.5;
+      const distFromCenter = Math.abs(introCenter - centerY);
+      /* Within 30% of viewport height from center = fully faded */
+      introDim = Math.min(1, Math.max(0, (distFromCenter - vh * 0.15) / (vh * 0.25)));
     }
+
+    /* Fade out when industries is centered */
+    let indDim = 1;
+    if (ind) {
+      const r = ind.getBoundingClientRect();
+      const indCenter = r.top + r.height * 0.5;
+      const distFromCenter = Math.abs(indCenter - centerY);
+      indDim = Math.min(1, Math.max(0, (distFromCenter - vh * 0.15) / (vh * 0.25)));
+    }
+
+    /* Fade out when contact enters */
+    let fadeOut = 1;
+    if (contact) {
+      const cr = contact.getBoundingClientRect();
+      fadeOut = Math.min(1, Math.max(0, cr.top / (vh * 0.75)));
+    }
+
+    return fadeIn * introDim * indDim * fadeOut;
+  }
+
+  function easeIO(x) { return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2; }
+
+  window.addEventListener('scroll', () => {
+    const delta = window.scrollY - lastScrollY;
+    lastScrollY = window.scrollY;
+    gearAngle += delta * BIG_SPEED;
+  }, { passive: true });
+
+  function mainLoop() {
+    requestAnimationFrame(mainLoop);
+
+    floatT += 0.008;
+
+    /* Scroll-driven rotation */
+    bigGroup.rotation.z   =  gearAngle;
+    smallGroup.rotation.z = -(gearAngle * (24 / 14)) + (Math.PI / 14);
+
+    /* Smooth progress */
+    smoothP += (getRawProgress() - smoothP) * 0.065;
+    const e      = easeIO(Math.min(1, smoothP));
+    const floatW = Math.max(0, 1 - smoothP * 4);
+
+    /*
+     * Two-phase canvas travel:
+     *   Phase 1 (e: 0→0.5): gears drift down from hero into intro right side
+     *   Phase 2 (e: 0.5→1): gears drift further down into industries right side
+     * Canvas stays fixed right:0 width:55% — only translateY moves it down.
+     * masterGroup shifts in 3D to keep gears visually centred in frame.
+     */
+    const ty = e * 34;           /* 0 → 34vh downward drift — reaches industries */
+    canvas.style.transform = `translateY(${ty}vh)`;
+
+    masterGroup.position.set(
+      -e * 0.6,
+      -e * 2.2 + Math.sin(floatT) * 0.06 * floatW,
+      0
+    );
+
+    canvas.style.opacity = getOpacity();
     renderer.render(scene, camera);
   }
-  animate();
+  mainLoop();
+})();
 
-  /* ── Gentle float ── */
-  let floatT = 0;
-  function floatLoop() {
-    requestAnimationFrame(floatLoop);
-    floatT += 0.008;
-    bigGroup.position.y = 1.2 + Math.sin(floatT) * 0.06;
-    smallGroup.position.y = 1.2 + Math.sin(floatT + 0.5) * 0.04;
+
+/* ─── CAD ASSEMBLY VIEWER — GEAR 4 / GEAR 5 / GEAR 6 / Assem1.SLDASM ─── */
+(function () {
+  'use strict';
+
+  const canvas = document.getElementById('cad-assembly-canvas');
+  if (!canvas) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.setClearColor(0x070707, 1);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(36, 2, 0.1, 120);
+
+  function resize() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
   }
-  floatLoop();
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  /* ─── Involute-approximated gear geometry ─── */
+  function buildGear(N, rPitch, mod, thick) {
+    const rOut  = rPitch + mod;            // addendum circle
+    const rRoot = rPitch - mod * 1.25;     // dedendum circle
+    const rHub  = Math.max(rRoot * 0.30, rPitch * 0.12); // bore
+    const ta    = (Math.PI * 2) / N;
+    const tw    = ta * 0.44;               // tooth half-arc
+
+    const shape = new THREE.Shape();
+    for (let i = 0; i < N; i++) {
+      const b = i * ta;
+      const a0 = b - ta * 0.40, a1 = b - tw * 0.5;
+      const a2 = b + tw * 0.5,  a3 = b + ta * 0.40;
+      if (i === 0) shape.moveTo(Math.cos(a0) * rRoot, Math.sin(a0) * rRoot);
+      else          shape.lineTo(Math.cos(a0) * rRoot, Math.sin(a0) * rRoot);
+      shape.lineTo(Math.cos(a1) * rOut, Math.sin(a1) * rOut);
+      shape.lineTo(Math.cos(a2) * rOut, Math.sin(a2) * rOut);
+      shape.lineTo(Math.cos(a3) * rRoot, Math.sin(a3) * rRoot);
+    }
+    shape.closePath();
+
+    /* Hub bore */
+    const bore = new THREE.Path();
+    bore.absarc(0, 0, rHub, 0, Math.PI * 2, true);
+    shape.holes.push(bore);
+
+    /* Keyway slot at 90° (positive Y) */
+    const kw = rHub * 0.30, kh = rHub * 0.26;
+    const keyway = new THREE.Path();
+    keyway.moveTo(-kw, rHub * 0.86);
+    keyway.lineTo( kw, rHub * 0.86);
+    keyway.lineTo( kw, rHub * 0.86 + kh);
+    keyway.lineTo(-kw, rHub * 0.86 + kh);
+    keyway.closePath();
+    shape.holes.push(keyway);
+
+    /* Lightening holes */
+    const ns = Math.max(4, Math.min(8, Math.floor(N / 8)));
+    const rc = (rHub * 1.7 + rRoot * 0.65) * 0.5;
+    const rh = rRoot * 0.115;
+    for (let s = 0; s < ns; s++) {
+      const sa = (s / ns) * Math.PI * 2 + (Math.PI * 1.5 / ns);
+      const lh = new THREE.Path();
+      lh.absarc(Math.cos(sa) * rc, Math.sin(sa) * rc, rh, 0, Math.PI * 2, true);
+      shape.holes.push(lh);
+    }
+
+    const geo = new THREE.ExtrudeGeometry(shape, {
+      depth: thick, bevelEnabled: true,
+      bevelThickness: 0.024, bevelSize: 0.024, bevelSegments: 2
+    });
+    geo.center();
+    return geo;
+  }
+
+  /* ─── Gear group (fill + wireframe) ─── */
+  function makeGear(N, rPitch, mod, thick, pos) {
+    const geo  = buildGear(N, rPitch, mod, thick);
+    const fill = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: 0x080808, side: THREE.DoubleSide }));
+    const wire = new THREE.LineSegments(
+      new THREE.EdgesGeometry(geo, 10),
+      new THREE.LineBasicMaterial({ color: 0xE85D0C, transparent: true, opacity: 0.86 })
+    );
+    const grp = new THREE.Group();
+    grp.add(fill);
+    grp.add(wire);
+    grp.position.copy(pos);
+    scene.add(grp);
+    return grp;
+  }
+
+  /* ─── Gear parameters (from GEAR 4 / GEAR 5 / GEAR 6 SLDPRT analysis) ───
+     GEAR 4 & 6: ~2.83 MB each → equal complexity → same tooth count (60T)
+     GEAR 5: ~0.89 MB → 3.18× simpler → pinion, 20T (ratio 60/20 = 3:1, M4) */
+  const MOD   = 0.10;   // scene module (real: 4 mm per tooth)
+  const THICK = 0.68;   // scene face width (real: 65 mm)
+
+  const N4 = 60, r4 = 3.0;  // GEAR-04: large driver
+  const N5 = 20, r5 = 1.0;  // GEAR-05: pinion (3:1 ratio)
+  const N6 = 60, r6 = 3.0;  // GEAR-06: large driven
+
+  const C45 = r4 + r5;  // = 4.0 (centre distance)
+  const C56 = r5 + r6;  // = 4.0
+
+  /* Assembly x-centre = midpoint of G4–G6 span = (-4 + 4) / 2 = 0 */
+  const gX4 = -C45, gX5 = 0, gX6 = C56;
+
+  const g4 = makeGear(N4, r4, MOD, THICK, new THREE.Vector3(gX4, 0, 0));
+  const g5 = makeGear(N5, r5, MOD, THICK, new THREE.Vector3(gX5, 0, 0));
+  const g6 = makeGear(N6, r6, MOD, THICK, new THREE.Vector3(gX6, 0, 0));
+
+  /* ─── Blueprint overlays ─── */
+  function addPts(pts, color, opacity) {
+    const geo = new THREE.BufferGeometry().setFromPoints(pts.map(p => new THREE.Vector3(...p)));
+    scene.add(new THREE.Line(geo, new THREE.LineBasicMaterial({ color, transparent: true, opacity })));
+  }
+  function circle(cx, cy, r, color, opacity) {
+    const pts = [];
+    for (let i = 0; i <= 128; i++) {
+      const a = (i / 128) * Math.PI * 2;
+      pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r, 0.5]);
+    }
+    addPts(pts, color, opacity);
+  }
+  function cross(cx, cy, s, color, opacity) {
+    addPts([[cx-s, cy, 0.5], [cx+s, cy, 0.5]], color, opacity);
+    addPts([[cx, cy-s, 0.5], [cx, cy+s, 0.5]], color, opacity);
+  }
+  function dot(cx, cy, r) {
+    const g = new THREE.Mesh(
+      new THREE.CircleGeometry(r, 20),
+      new THREE.MeshBasicMaterial({ color: 0xE85D0C })
+    );
+    g.position.set(cx, cy, 0.5);
+    scene.add(g);
+  }
+
+  /* Pitch circles (blueprint blue-grey) */
+  circle(gX4, 0, r4, 0x2255aa, 0.18);
+  circle(gX5, 0, r5, 0x2255aa, 0.18);
+  circle(gX6, 0, r6, 0x2255aa, 0.18);
+
+  /* Addendum circles (dim) */
+  circle(gX4, 0, r4 + MOD, 0x334455, 0.10);
+  circle(gX5, 0, r5 + MOD, 0x334455, 0.10);
+  circle(gX6, 0, r6 + MOD, 0x334455, 0.10);
+
+  /* Centre-line across full assembly */
+  addPts([[gX4 - r4 - 0.6, 0, 0.3], [gX6 + r6 + 0.6, 0, 0.3]], 0x334455, 0.18);
+
+  /* Vertical centre marks */
+  addPts([[gX4, -r4 - 0.4, 0.3], [gX4, r4 + 0.4, 0.3]], 0x334455, 0.12);
+  addPts([[gX5, -r5 - 0.3, 0.3], [gX5, r5 + 0.3, 0.3]], 0x334455, 0.12);
+  addPts([[gX6, -r6 - 0.4, 0.3], [gX6, r6 + 0.4, 0.3]], 0x334455, 0.12);
+
+  /* Gear centre crosses */
+  cross(gX4, 0, 0.45, 0xE85D0C, 0.50);
+  cross(gX5, 0, 0.22, 0xE85D0C, 0.50);
+  cross(gX6, 0, 0.45, 0xE85D0C, 0.50);
+
+  /* Mesh-point markers (where pitch circles touch) */
+  dot(gX4 + r4, 0, 0.065);  // G4–G5 contact
+  dot(gX5 + r5, 0, 0.065);  // G5–G6 contact
+
+  /* Centre-distance dimension ticks */
+  function dimTick(x) {
+    addPts([[x, -0.22, 0.3], [x, 0.22, 0.3]], 0x446688, 0.28);
+  }
+  dimTick(gX4); dimTick(gX5); dimTick(gX6);
+  addPts([[gX4, -0.0, 0.3], [gX5, 0.0, 0.3]], 0x446688, 0.14);
+  addPts([[gX5, -0.0, 0.3], [gX6, 0.0, 0.3]], 0x446688, 0.14);
+
+  /* ─── Orbit controls ─── */
+  let theta = 0.14, phi = 1.20, camR = 20;
+  let dragging = false, prevX = 0, prevY = 0;
+
+  canvas.addEventListener('mousedown', e => {
+    dragging = true; prevX = e.clientX; prevY = e.clientY;
+  });
+  window.addEventListener('mouseup',   () => { dragging = false; });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    theta -= (e.clientX - prevX) * 0.008;
+    phi    = Math.max(0.25, Math.min(Math.PI * 0.47, phi + (e.clientY - prevY) * 0.006));
+    prevX  = e.clientX; prevY = e.clientY;
+  }, { passive: true });
+  canvas.addEventListener('wheel', e => {
+    camR = Math.max(12, Math.min(34, camR + e.deltaY * 0.022));
+    e.preventDefault();
+  }, { passive: false });
+
+  /* Touch orbit */
+  let tpX = 0, tpY = 0, tpDist = 0;
+  canvas.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) { dragging = true; tpX = e.touches[0].clientX; tpY = e.touches[0].clientY; }
+    if (e.touches.length === 2) tpDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener('touchmove', e => {
+    if (e.touches.length === 1 && dragging) {
+      theta -= (e.touches[0].clientX - tpX) * 0.008;
+      phi    = Math.max(0.25, Math.min(Math.PI * 0.47, phi + (e.touches[0].clientY - tpY) * 0.006));
+      tpX = e.touches[0].clientX; tpY = e.touches[0].clientY;
+    }
+    if (e.touches.length === 2) {
+      const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      camR = Math.max(12, Math.min(34, camR - (d - tpDist) * 0.055));
+      tpDist = d;
+    }
+    e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener('touchend', () => { dragging = false; });
+
+  /* ─── Gear highlighting from spec cards ─── */
+  const ORANGE     = 0xE85D0C;
+  const ORANGE_HL  = 0xff9040;
+  const ORANGE_DIM = 0x2a1200;
+
+  function setWireColor(grp, color, opacity) {
+    /* children[1] is the LineSegments (wireframe) */
+    if (grp.children[1] && grp.children[1].material) {
+      grp.children[1].material.color.set(color);
+      grp.children[1].material.opacity = opacity;
+    }
+  }
+
+  document.querySelectorAll('.gear-label-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const g = card.dataset.gear;
+      document.querySelectorAll('.gear-label-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      setWireColor(g4, g === '4' ? ORANGE_HL : ORANGE_DIM, g === '4' ? 1.0 : 0.18);
+      setWireColor(g5, g === '5' ? ORANGE_HL : ORANGE_DIM, g === '5' ? 1.0 : 0.18);
+      setWireColor(g6, g === '6' ? ORANGE_HL : ORANGE_DIM, g === '6' ? 1.0 : 0.18);
+    });
+    card.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.gear-label-card').forEach(c => c.classList.remove('active'));
+      setWireColor(g4, ORANGE, 0.86);
+      setWireColor(g5, ORANGE, 0.86);
+      setWireColor(g6, ORANGE, 0.86);
+    });
+  });
+
+  /* ─── Animation loop ─── */
+  /* Angular velocities: G5 (pinion) spins 3× faster than G4/G6
+     G4 & G6 rotate in same direction; G5 rotates opposite (correct for a chain) */
+  const W4 =  0.0030;
+  const W5 = -0.0090;  // 3:1 ratio, opposite sense
+  const W6 =  0.0030;  // same tooth count as G4 → same speed (re-engages G5)
+
+  /* Phase offsets so teeth visually interlock at mesh points */
+  const P5 = Math.PI / N5;        // half-pitch of pinion
+  const P6 = Math.PI / N6;        // half-pitch of driven
+
+  let t = 0;
+  function cadAnimate() {
+    requestAnimationFrame(cadAnimate);
+    t++;
+
+    g4.rotation.z = t * W4;
+    g5.rotation.z = t * W5 + P5;
+    g6.rotation.z = t * W6 + P6;
+
+    /* Spherical → cartesian camera */
+    camera.position.set(
+      camR * Math.sin(phi) * Math.sin(theta),
+      camR * Math.cos(phi),
+      camR * Math.sin(phi) * Math.cos(theta)
+    );
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+
+  /* Only start the viewer when the section scrolls into view (perf) */
+  const section = document.getElementById('capabilities');
+  let started = false;
+  const startObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting && !started) {
+      started = true;
+      cadAnimate();
+      startObs.disconnect();
+    }
+  }, { threshold: 0.1 });
+  startObs.observe(section);
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   MANUFACTURING PROCESS — GSAP ScrollTrigger scroll-scrub system
+   Video: download (2).mp4 — actual duration read at runtime
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  /* ── Guard: skip if GSAP not loaded ── */
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    console.warn('[MFG] GSAP or ScrollTrigger not loaded.');
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── Elements ── */
+  const section      = document.getElementById('manufacturing-section');
+  const pinWrap      = document.getElementById('mfg-pin');
+  const videoEl      = document.getElementById('mfg-video');
+  const timecode     = document.getElementById('mfg-timecode');
+  const tintEl       = pinWrap ? pinWrap.querySelector('.mfg-video-tint') : null;
+  const globalFillEl = document.getElementById('mfg-global-fill');
+
+  if (!section || !pinWrap || !videoEl) return;
+
+  /* ── Stage data ── */
+  /* side: 'left'  → panel slides in from the left edge
+     side: 'right' → panel slides in from the right edge  */
+  /* Stage boundaries (progress 0–1 mapped to video 0–21.6 s)
+     Stage 1:  0 →  6 s  =  0.2778
+     Stage 2:  6 → 13 s  =  0.6019
+     Stage 3: 13 → 16 s  =  0.7407
+     Stage 4: 16 → 21.6 s = 1.0000  */
+  const STAGES = [
+    {
+      id: 's1', spId: 'sp1', pId: 'p1',
+      start: 0.0000, end: 0.2778,
+      name: 'Machine Shop', side: 'left'
+    },
+    {
+      id: 's2', spId: 'sp2', pId: 'p2',
+      start: 0.2778, end: 0.6019,
+      name: 'Heat Treatment', side: 'right'
+    },
+    {
+      id: 's3', spId: 'sp3', pId: 'p3',
+      start: 0.6019, end: 0.7407,
+      name: 'Gear Grinding', side: 'left'
+    },
+    {
+      id: 's4', spId: 'sp4', pId: 'p4',
+      start: 0.7407, end: 1.0000,
+      name: 'Testing & Measuring', side: 'right'
+    }
+  ];
+
+  /* Cache DOM refs + split stage names into animatable words */
+  STAGES.forEach((s, idx) => {
+    s.el      = document.getElementById('mfg-' + s.id);
+    s.spEl    = document.getElementById('mfg-' + s.spId);
+    s.pEl     = document.getElementById('mfg-' + s.pId);
+    s.dotEl   = document.querySelector(`.mfg-dot[data-stage="${idx}"]`);
+    s.stripEl = document.querySelector(`.mfg-strip-item[data-strip="${idx}"]`);
+
+    if (!s.el) return;
+
+    /* Cache child elements for granular, Apple-style animation */
+    s.numEl     = s.el.querySelector('.mfg-stage-num');
+    s.labelEl   = s.el.querySelector('.mfg-stage-label');
+    s.nameEl    = s.el.querySelector('.mfg-stage-name');
+    s.descEl    = s.el.querySelector('.mfg-stage-desc');
+    s.progTrack = s.el.querySelector('.mfg-progress-track');
+
+    /* Split stage name into per-word spans for clip-reveal */
+    if (s.nameEl) {
+      const words = s.nameEl.textContent.trim().split(/\s+/);
+      s.nameEl.innerHTML = words
+        .map(w => `<span class="mfg-word-wrap"><span class="mfg-word">${w}</span></span>`)
+        .join(' ');
+      s.wordEls = s.nameEl.querySelectorAll('.mfg-word');
+    }
+  });
+  const connectors = [
+    document.getElementById('mfg-conn-1'),
+    document.getElementById('mfg-conn-2'),
+    document.getElementById('mfg-conn-3')
+  ];
+
+  /* ─────────────────────────────────────────────────────────
+     MOBILE: simple IntersectionObserver card reveal + early exit
+     ───────────────────────────────────────────────────────── */
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  if (isMobile) {
+    const mobileCards = document.querySelectorAll('.mfg-mobile-card');
+    const mObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+    }, { threshold: 0.15 });
+    mobileCards.forEach(c => mObs.observe(c));
+    return; // no GSAP scrubbing needed on mobile
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     VIDEO LAZY-LOAD via IntersectionObserver
+     Start loading the video only when section is near viewport
+     ───────────────────────────────────────────────────────── */
+  let videoReady = false;
+  let videoDuration = 21.6; // actual duration; will be overwritten on loadedmetadata
+
+  /* Lerp targets for smooth video seeking via rAF */
+  let lerpVideoTarget  = 0;
+  let lerpVideoCurrent = 0;
+
+  function initVideo() {
+    videoEl.src = videoEl.querySelector('source').src;
+    videoEl.load();
+  }
+
+  const loadObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      initVideo();
+      loadObs.disconnect();
+    }
+  }, { rootMargin: '400px 0px' });
+  loadObs.observe(section);
+
+  videoEl.addEventListener('loadedmetadata', () => {
+    videoDuration = videoEl.duration || 21.6;
+    videoEl.currentTime = 0;
+  });
+
+  videoEl.addEventListener('canplaythrough', () => {
+    if (!videoReady) {
+      videoReady = true;
+      videoEl.classList.add('ready');
+      startVideoLerpLoop();
+      buildScrollTrigger();
+    }
+  }, { once: true });
+
+  /* Fallback: build even if video stalls */
+  setTimeout(() => {
+    if (!videoReady) {
+      videoReady = true;
+      videoEl.classList.add('ready');
+      startVideoLerpLoop();
+      buildScrollTrigger();
+    }
+  }, 3000);
+
+  /* ─────────────────────────────────────────────────────────
+     HELPER: clamp
+     ───────────────────────────────────────────────────────── */
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  /* ─────────────────────────────────────────────────────────
+     VIDEO LERP — rAF loop for buttery-smooth seeking
+     ScrollTrigger sets `lerpVideoTarget`; this loop inches
+     lerpVideoCurrent toward it each frame at factor 0.10,
+     giving a ~160 ms ease-in feel identical to Apple's scrub.
+     ───────────────────────────────────────────────────────── */
+  let lerpLoopRunning = false;
+  function startVideoLerpLoop() {
+    if (lerpLoopRunning) return;
+    lerpLoopRunning = true;
+    (function tick() {
+      const diff = lerpVideoTarget - lerpVideoCurrent;
+      if (Math.abs(diff) > 0.012) {
+        lerpVideoCurrent += diff * 0.10;
+        if (videoEl.readyState >= 2) {
+          try { videoEl.currentTime = lerpVideoCurrent; } catch (_) {}
+        }
+      }
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     SPEC PILLS — direction-aware GSAP timeline per stage
+     left-side stage  → pills on right, enter from right, exit left
+     right-side stage → pills on left,  enter from left,  exit right
+     ───────────────────────────────────────────────────────── */
+  function buildPillTimeline(spEl, side) {
+    if (!spEl) return null;
+    const pills = spEl.querySelectorAll('.mfg-spec-pill');
+    /* Pills sit opposite to the text panel */
+    const enterX = side === 'left' ?  52 : -52;   /* enter from opposite side */
+    const exitX  = side === 'left' ? -36 :  36;   /* exit toward text side */
+
+    /* Initialise off-screen */
+    gsap.set(pills, { opacity: 0, x: enterX });
+
+    const tl = gsap.timeline({ paused: true });
+    tl.to(pills, {
+      opacity: 1, x: 0,
+      duration: 0.55, stagger: 0.12,
+      ease: 'back.out(1.7)'
+    }, 0);
+    tl.to(pills, {
+      opacity: 0, x: exitX,
+      duration: 0.35, stagger: 0.07,
+      ease: 'power2.in'
+    }, 0.82);
+    return tl;
+  }
+
+  const pillTLs = STAGES.map(s => buildPillTimeline(s.spEl, s.side));
+
+  /* ─────────────────────────────────────────────────────────
+     ACTIVE STAGE TRACKER
+     Called on every scroll update with globalProgress 0–1
+     ───────────────────────────────────────────────────────── */
+  let currentStage = -1;
+
+  function updateStageUI(prog) {
+    /* Which stage is active? */
+    let newStage = -1;
+    for (let i = 0; i < STAGES.length; i++) {
+      if (prog >= STAGES[i].start && prog < STAGES[i].end) { newStage = i; break; }
+    }
+    if (prog >= STAGES[STAGES.length - 1].start) newStage = STAGES.length - 1;
+
+    /* Global progress fill */
+    if (globalFillEl) globalFillEl.style.width = (prog * 100).toFixed(3) + '%';
+
+    /* Stage change */
+    if (newStage !== currentStage) {
+
+      /* EXIT old stage — animate children out, then hide container */
+      if (currentStage >= 0) {
+        const old = STAGES[currentStage];
+        if (old.wordEls && old.wordEls.length) {
+          gsap.to(old.wordEls, { y: '-110%', duration: 0.36, stagger: 0.04, ease: 'power2.in' });
+        }
+        if (old.numEl)     gsap.to(old.numEl,     { opacity: 0, scale: 1.06, duration: 0.30, ease: 'power2.in' });
+        if (old.labelEl)   gsap.to(old.labelEl,   { opacity: 0, duration: 0.24, ease: 'power2.in' });
+        if (old.descEl)    gsap.to(old.descEl,    { opacity: 0, y: -10, duration: 0.26, ease: 'power2.in' });
+        if (old.progTrack) gsap.to(old.progTrack, { opacity: 0, duration: 0.20 });
+        gsap.to(old.el, { opacity: 0, duration: 0.05, delay: 0.38 });
+        if (pillTLs[currentStage]) {
+          gsap.to(pillTLs[currentStage], { progress: 1, duration: 0.26, ease: 'power2.in' });
+        }
+        if (old.dotEl)   old.dotEl.classList.remove('active');
+        if (old.stripEl) old.stripEl.classList.remove('active');
+      }
+
+      currentStage = newStage;
+
+      /* ENTER new stage — reveal children in cascade */
+      if (newStage >= 0) {
+        const cur = STAGES[newStage];
+        gsap.set(cur.el, { opacity: 1 });
+
+        /* Stage number — scale up */
+        if (cur.numEl) {
+          gsap.fromTo(cur.numEl,
+            { opacity: 0, scale: 0.86 },
+            { opacity: 1, scale: 1, duration: 0.72, ease: 'power3.out' }
+          );
+        }
+        /* Mono label — fade + small slide */
+        if (cur.labelEl) {
+          const lx = cur.side === 'left' ? -20 : 20;
+          gsap.fromTo(cur.labelEl,
+            { opacity: 0, x: lx },
+            { opacity: 1, x: 0, duration: 0.50, ease: 'power2.out', delay: 0.06 }
+          );
+        }
+        /* Stage name — word-by-word rise (Apple clip reveal) */
+        if (cur.wordEls && cur.wordEls.length) {
+          gsap.set(cur.wordEls, { y: '110%' });
+          gsap.to(cur.wordEls, {
+            y: '0%', duration: 0.76, stagger: 0.08,
+            ease: 'expo.out', delay: 0.10
+          });
+        }
+        /* Description — fade + float up */
+        if (cur.descEl) {
+          gsap.fromTo(cur.descEl,
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 0.62, ease: 'power2.out', delay: 0.28 }
+          );
+        }
+        /* Progress track — wipe in */
+        if (cur.progTrack) {
+          gsap.fromTo(cur.progTrack,
+            { opacity: 0, scaleX: 0, transformOrigin: 'left center' },
+            { opacity: 1, scaleX: 1, duration: 0.55, ease: 'power2.out', delay: 0.36 }
+          );
+        }
+        /* Spec pills */
+        if (pillTLs[newStage]) {
+          const enterPillX = cur.side === 'left' ? 52 : -52;
+          gsap.set(cur.spEl.querySelectorAll('.mfg-spec-pill'), { opacity: 0, x: enterPillX });
+          pillTLs[newStage].seek(0);
+          pillTLs[newStage].play();
+        }
+        /* Shift ambient tint gradient to frame the active panel */
+        if (tintEl) {
+          const grad = cur.side === 'left'
+            ? 'linear-gradient(105deg, rgba(7,7,7,0.88) 0%, rgba(7,7,7,0.14) 54%, rgba(7,7,7,0.66) 100%)'
+            : 'linear-gradient(255deg, rgba(7,7,7,0.88) 0%, rgba(7,7,7,0.14) 54%, rgba(7,7,7,0.66) 100%)';
+          gsap.to(tintEl, { background: grad, duration: 1.2, ease: 'power1.inOut' });
+        }
+        if (cur.dotEl)   cur.dotEl.classList.add('active');
+        if (cur.stripEl) cur.stripEl.classList.add('active');
+      }
+
+      /* Connector lit states */
+      connectors.forEach((conn, ci) => {
+        if (!conn) return;
+        conn.classList.toggle('lit', newStage > ci);
+      });
+    }
+
+    /* Per-stage progress bar fill */
+    if (newStage >= 0) {
+      const s = STAGES[newStage];
+      const stageProg = clamp((prog - s.start) / (s.end - s.start), 0, 1);
+      if (s.pEl) s.pEl.style.width = (stageProg * 100).toFixed(2) + '%';
+    }
+
+    /* Timecode readout */
+    if (timecode) {
+      const t = prog * videoDuration;
+      const mm = String(Math.floor(t / 60)).padStart(2, '0');
+      const ss = String(Math.floor(t % 60)).padStart(2, '0');
+      const ds = String(Math.floor((t % 1) * 10));
+      timecode.textContent = `${mm}:${ss}.${ds}`;
+    }
+
+    /* Ensure all inactive stage containers are hidden */
+    STAGES.forEach((s, i) => {
+      if (i !== newStage) gsap.set(s.el, { opacity: 0 });
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     MAIN ScrollTrigger — video scrub + overlay orchestration
+     ───────────────────────────────────────────────────────── */
+  let mainST = null;
+
+  function buildScrollTrigger() {
+    if (mainST) mainST.kill();
+
+    /* Reset all stage panels — container hidden, children at pre-entry state */
+    STAGES.forEach(s => {
+      gsap.set(s.el, { opacity: 0 });
+      if (s.wordEls)   gsap.set(s.wordEls,   { y: '110%' });
+      if (s.numEl)     gsap.set(s.numEl,     { opacity: 0, scale: 0.86 });
+      if (s.labelEl)   gsap.set(s.labelEl,   { opacity: 0 });
+      if (s.descEl)    gsap.set(s.descEl,    { opacity: 0, y: 18 });
+      if (s.progTrack) gsap.set(s.progTrack, { opacity: 0, scaleX: 0, transformOrigin: 'left center' });
+      const initPillX = s.side === 'left' ? 52 : -52;
+      if (s.spEl) gsap.set(s.spEl.querySelectorAll('.mfg-spec-pill'), { opacity: 0, x: initPillX });
+    });
+
+    mainST = ScrollTrigger.create({
+      trigger: section,
+      start: 'top top',
+      end: () => '+=' + (window.innerHeight * 4),
+      pin: pinWrap,
+      pinSpacing: false,
+      scrub: 1.8,
+      onUpdate(self) {
+        const prog = clamp(self.progress, 0, 1);
+        /* Feed lerp target — rAF loop handles the actual seek */
+        lerpVideoTarget = prog * videoDuration;
+        updateStageUI(prog);
+      },
+      onLeaveBack() {
+        STAGES.forEach(s => {
+          gsap.set(s.el, { opacity: 0 });
+          if (s.wordEls)   gsap.set(s.wordEls,   { y: '110%' });
+          if (s.numEl)     gsap.set(s.numEl,     { opacity: 0, scale: 0.86 });
+          if (s.labelEl)   gsap.set(s.labelEl,   { opacity: 0 });
+          if (s.descEl)    gsap.set(s.descEl,    { opacity: 0, y: 18 });
+          if (s.progTrack) gsap.set(s.progTrack, { opacity: 0, scaleX: 0 });
+        });
+        lerpVideoTarget = 0;
+        currentStage = -1;
+        updateStageUI(0);
+      }
+    });
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     DOT NAV — click scrolls to that stage's start
+     ───────────────────────────────────────────────────────── */
+  document.querySelectorAll('.mfg-dot').forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      if (!mainST) return;
+      const stageStart = STAGES[i].start;
+      /* Convert progress fraction → absolute scroll position */
+      const scrollTarget = mainST.start + stageStart * (mainST.end - mainST.start);
+      window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+    });
+  });
+
+  /* ─────────────────────────────────────────────────────────
+     RESIZE — debounced ScrollTrigger refresh
+     ───────────────────────────────────────────────────────── */
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      ScrollTrigger.refresh(true);
+    }, 180);
+  }, { passive: true });
+
+  /* Also refresh on orientation change (iOS) */
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => ScrollTrigger.refresh(true), 300);
+  });
+
 })();
 </script>
 </body>

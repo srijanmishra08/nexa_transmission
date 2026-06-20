@@ -6,6 +6,7 @@
 <title>Nexa Transmission LLP — Precision Gears. Quality Without Compromise.</title>
 <link rel="icon" type="image/png" href="Artboard 42 copy@350x-8 (1).png" />
 <link rel="apple-touch-icon" href="Artboard 42 copy@350x-8 (1).png" />
+<link rel="preload" as="video" href="hero-scroll.mp4" type="video/mp4" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -1805,9 +1806,9 @@
       class="hero-scroll-video"
       muted
       playsinline
-      preload="metadata"
+      preload="auto"
     >
-      <source src="Untitled design.mp4" type="video/mp4" />
+      <source src="hero-scroll.mp4" type="video/mp4" />
     </video>
     <div class="hero-video-vignette"></div>
   </div>
@@ -2083,8 +2084,12 @@ window.addEventListener('load', () => {
   const heroVideo = document.getElementById('hero-scroll-video');
   if (!hero || !heroVideo) return;
 
+  let triggerBuilt = false;
+
   function buildHeroVideoTrigger() {
+    if (triggerBuilt) return;
     if (!Number.isFinite(heroVideo.duration) || heroVideo.duration <= 0) return;
+    triggerBuilt = true;
 
     heroVideo.classList.add('is-ready');
 
@@ -2122,6 +2127,9 @@ window.addEventListener('load', () => {
     buildHeroVideoTrigger();
   } else {
     heroVideo.addEventListener('loadedmetadata', buildHeroVideoTrigger, { once: true });
+    heroVideo.addEventListener('loadeddata', buildHeroVideoTrigger, { once: true });
+    heroVideo.addEventListener('canplay', buildHeroVideoTrigger, { once: true });
+    heroVideo.preload = 'auto';
     heroVideo.load();
   }
 })();

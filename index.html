@@ -2043,8 +2043,10 @@
   <div class="hero-media-wrap" aria-hidden="true">
     <video
       id="hero-scroll-video"
-      class="hero-scroll-video"
+      class="hero-scroll-video is-ready"
       muted
+      autoplay
+      loop
       playsinline
       preload="auto"
     >
@@ -2395,64 +2397,22 @@ window.addEventListener('load', () => {
   });
 });
 
-/* ─── Hero video: smooth scroll-scrub ─── */
+/* ─── Hero video: autoplay + parallax ─── */
 (function () {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-  gsap.registerPlugin(ScrollTrigger);
-
   const hero = document.getElementById('hero');
   const heroVideo = document.getElementById('hero-scroll-video');
   if (!hero || !heroVideo) return;
 
-  let triggerBuilt = false;
-
-  function buildHeroVideoTrigger() {
-    if (triggerBuilt) return;
-    if (!Number.isFinite(heroVideo.duration) || heroVideo.duration <= 0) return;
-    triggerBuilt = true;
-
-    heroVideo.classList.add('is-ready');
-
-    const scrubState = { t: 0 };
-    const maxPlayableTime = Math.max(0.05, Math.min(heroVideo.duration - 0.05, heroVideo.duration * 0.95));
-
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: hero,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2
-      }
-    })
-    .to(heroVideo, {
-      yPercent: 7,
-      scale: 1.0,
-      opacity: 0.34,
-      ease: 'none'
-    }, 0)
-    .to(scrubState, {
-      t: 1,
-      ease: 'none',
-      onUpdate() {
-        if (heroVideo.readyState < 2) return;
-        const nextTime = scrubState.t * maxPlayableTime;
-        if (Math.abs(heroVideo.currentTime - nextTime) > 0.03) {
-          heroVideo.currentTime = nextTime;
-        }
-      }
-    }, 0);
-  }
-
-  if (heroVideo.readyState >= 1) {
-    buildHeroVideoTrigger();
-  } else {
-    heroVideo.addEventListener('loadedmetadata', buildHeroVideoTrigger, { once: true });
-    heroVideo.addEventListener('loadeddata', buildHeroVideoTrigger, { once: true });
-    heroVideo.addEventListener('canplay', buildHeroVideoTrigger, { once: true });
-    heroVideo.preload = 'auto';
-    heroVideo.load();
-  }
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: hero,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.8
+    }
+  })
+  .to(heroVideo, { yPercent: 10, scale: 1.04, opacity: 0.15, ease: 'none' }, 0);
 })();
 
 /* ─── Crosshair cursor ─── */

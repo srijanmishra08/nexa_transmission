@@ -231,7 +231,7 @@
   }
 
   .hero-scroll-video.is-ready {
-    opacity: 0.2;
+    opacity: 0.28;
   }
 
   .hero-video-vignette {
@@ -1499,8 +1499,240 @@
     }
   }
 
+  /* ── FOUNDERS ── */
+  #founders {
+    background: #0F0F0F;
+    color: #E8E4DC;
+    padding: 140px 48px;
+    position: relative;
+    overflow: hidden;
+    z-index: 5;
+  }
+  #founders::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+  #founders .section-label { color: var(--orange); }
+  #founders .section-header .title { color: #E8E4DC; }
+  #founders .section-header .subtitle { color: rgba(232,228,220,0.4); }
+  #founders .section-rule { background: rgba(255,255,255,0.07); }
+
+  .founders-intro {
+    font-size: clamp(17px, 1.9vw, 22px);
+    font-family: var(--font-body);
+    font-style: italic;
+    line-height: 1.75;
+    color: rgba(232,228,220,0.6);
+    max-width: 780px;
+    margin-bottom: 80px;
+    border-left: 2px solid var(--orange);
+    padding-left: 28px;
+  }
+
+  .founders-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .founder-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 52px 48px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.45s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .founder-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--orange), transparent 70%);
+  }
+  .founder-card:hover { background: rgba(232,93,12,0.04); }
+
+  .founder-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 32px;
+  }
+
+  .founder-monogram {
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba(232,93,12,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--orange);
+    flex-shrink: 0;
+    background: rgba(232,93,12,0.06);
+    letter-spacing: 0.05em;
+  }
+
+  .founder-header-text { flex: 1; }
+
+  .founder-role-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.26em;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .founder-name {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(22px, 2.4vw, 32px);
+    text-transform: uppercase;
+    color: #E8E4DC;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .founder-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin-bottom: 28px;
+  }
+
+  .founder-body {
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: rgba(232,228,220,0.52);
+    font-family: var(--font-body);
+    flex: 1;
+  }
+  .founder-body p { margin-bottom: 16px; }
+  .founder-body p:last-child { margin-bottom: 0; }
+  .founder-body .hi { color: rgba(232,228,220,0.8); font-weight: 500; }
+
+  .founder-sig {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .founder-sig-name {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 16px;
+    color: #E8E4DC;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .founder-sig-role {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(232,228,220,0.3);
+    display: block;
+  }
+
+  .founders-cert-strip {
+    display: flex;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-top: none;
+  }
+  .founders-cert-item {
+    flex: 1;
+    padding: 20px 28px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(232,228,220,0.35);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.3s;
+  }
+  .founders-cert-item:last-child { border-right: none; }
+  .founders-cert-item:hover { color: rgba(232,228,220,0.7); }
+  .cert-dot {
+    width: 4px; height: 4px;
+    background: var(--orange);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(232,93,12,0.6);
+  }
+
+  .founders-closing {
+    margin-top: 80px;
+    text-align: center;
+    padding: 56px 48px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    position: relative;
+    overflow: hidden;
+  }
+  .founders-closing::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center bottom, rgba(232,93,12,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .founders-closing-text {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(20px, 2.4vw, 30px);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgba(232,228,220,0.55);
+    line-height: 1.4;
+    max-width: 700px;
+    margin: 0 auto 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .founders-closing-text span { color: var(--orange); }
+  .founders-closing-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(232,228,220,0.25);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Smooth word-reveal for hero title */
+  .hero-word-wrap {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .hero-word {
+    display: inline-block;
+    transform: translateY(110%);
+  }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 1100px) {
+    .founders-grid { grid-template-columns: 1fr; }
+    .founder-card { padding: 40px 32px; }
+    .founders-cert-strip { flex-wrap: wrap; }
+    .founders-cert-item { flex: 1 1 40%; }
     .caps-grid { grid-template-columns: repeat(2, 1fr); }
     .cap-card { border-bottom: 1px solid var(--border); }
     .industries-grid { grid-template-columns: repeat(3, 1fr); }
@@ -1539,6 +1771,13 @@
     .footer-top { flex-direction: column; gap: 32px; }
     .footer-nav { align-items: flex-start; }
     .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    /* founders mobile */
+    #founders { padding: 80px 24px; }
+    .founders-grid { grid-template-columns: 1fr; gap: 2px; }
+    .founder-card { padding: 36px 24px; }
+    .founders-cert-strip { flex-direction: column; }
+    .founders-cert-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .founders-closing { padding: 40px 24px; }
   }
 </style>
 </head>
@@ -1564,7 +1803,8 @@
     <li><a href="#introduction"><span class="num">01</span>Introduction</a></li>
     <li><a href="#capabilities"><span class="num">02</span>Capabilities</a></li>
     <li><a href="#industries"><span class="num">03</span>Industries</a></li>
-    <li><a href="#contact"><span class="num">04</span>Contact</a></li>
+    <li><a href="#founders"><span class="num">04</span>Founders</a></li>
+    <li><a href="#contact"><span class="num">05</span>Contact</a></li>
   </ul>
   <a href="#contact" class="btn-enquire">
     <span class="btn-dot"></span>
@@ -1990,10 +2230,81 @@
   </div>
 </section>
 
+<!-- FOUNDERS -->
+<section id="founders">
+  <div class="section-header reveal">
+    <p class="section-label">04 / Founders</p>
+    <h2 class="title">A Message From<br>Our Founders.</h2>
+    <div class="section-rule"></div>
+    <p class="subtitle">Two Generations &nbsp;·&nbsp; One Standard of Excellence</p>
+  </div>
+
+  <p class="founders-intro reveal reveal-delay-1">
+    Nexa Transmission was established on the conviction that India's most demanding industries — steel, cement, mining, and railways — deserve transmission solutions engineered without compromise. That conviction is the foundation shared by both of us.
+  </p>
+
+  <div class="founders-grid">
+    <!-- Pritam Arora -->
+    <div class="founder-card reveal reveal-delay-1">
+      <div class="founder-card-header">
+        <div class="founder-monogram">PA</div>
+        <div class="founder-header-text">
+          <span class="founder-role-tag">Founder &amp; Managing Partner</span>
+          <h3 class="founder-name">Pritam Arora</h3>
+        </div>
+      </div>
+      <div class="founder-divider"></div>
+      <div class="founder-body">
+        <p>Central India is one of the fastest-growing industrial regions in the country. The expansion of cement, steel, mining, and core manufacturing activity across Chhattisgarh and the surrounding region has created a sustained and growing demand for reliable, high-performance transmission solutions. Yet for many years, industries in this region had no credible local partner — no precision industrial gearbox manufacturer rooted here, accountable here, and built specifically to serve these industries. <span class="hi">That gap is what Nexa Transmission was founded to fill.</span></p>
+        <p>Over twenty-five years in the gear industry, I have witnessed a fundamental shift in how heavy industry approaches power transmission. The tolerance for underperforming drives — those that merely function — has given way to a clear and justified demand for precision-engineered solutions that deliver consistent performance, extended service life, and measurable reliability.</p>
+        <p>This evolution did not happen by chance. It was driven by plant operators and engineers who recognised that transmission quality has a direct bearing on uptime, productivity, and operational cost. <span class="hi">Nexa Transmission was built to meet that standard</span> — drawing on decades of technical experience and an uncompromising approach to quality at every stage of manufacturing.</p>
+      </div>
+      <div class="founder-sig">
+        <span class="founder-sig-name">Pritam Arora</span>
+        <span class="founder-sig-role">Founder &amp; Managing Partner &nbsp;·&nbsp; Nexa Transmission LLP</span>
+      </div>
+    </div>
+
+    <!-- Kabir Arora -->
+    <div class="founder-card reveal reveal-delay-2">
+      <div class="founder-card-header">
+        <div class="founder-monogram">KA</div>
+        <div class="founder-header-text">
+          <span class="founder-role-tag">Co-Founder &amp; CEO</span>
+          <h3 class="founder-name">Kabir Arora</h3>
+        </div>
+      </div>
+      <div class="founder-divider"></div>
+      <div class="founder-body">
+        <p>Building on that foundation, our focus at Nexa is on advancing what precision manufacturing can deliver. <span class="hi">Our facility is fully integrated</span> — encompassing raw material processing, hobbing, heat treatment, precision gear grinding, and CMM-based dimensional verification — ensuring complete quality control at every stage, entirely in-house.</p>
+        <p>We are equally committed to extending the value of existing assets through our gearbox refurbishment programme, which reduces operational costs for our customers while delivering a meaningful reduction in environmental impact. Alongside this, we are developing an <span class="hi">AI-enabled predictive maintenance platform</span> to help plant operators transition from reactive to condition-based maintenance.</p>
+        <p>These initiatives reflect our broader commitment to being a long-term engineering partner, not merely a supplier. None of this would be possible without the skilled and dedicated team at Nexa Transmission. Their technical rigour, attention to detail, and shared commitment to precision are what translate our standards into every gearbox that leaves this facility.</p>
+        <p>The experience of the past and the ambition for what lies ahead are what define Nexa Transmission. We welcome the opportunity to demonstrate that commitment.</p>
+      </div>
+      <div class="founder-sig">
+        <span class="founder-sig-name">Kabir Arora</span>
+        <span class="founder-sig-role">Co-Founder &amp; CEO &nbsp;·&nbsp; Nexa Transmission LLP</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="founders-cert-strip reveal">
+    <div class="founders-cert-item"><span class="cert-dot"></span>ISO 9001</div>
+    <div class="founders-cert-item"><span class="cert-dot"></span>ISO 14001</div>
+    <div class="founders-cert-item"><span class="cert-dot"></span>ISO 45001</div>
+    <div class="founders-cert-item"><span class="cert-dot"></span>Raipur, Chhattisgarh, India</div>
+  </div>
+
+  <div class="founders-closing reveal">
+    <p class="founders-closing-text">The experience of the past and the ambition for what lies ahead are what <span>define Nexa Transmission.</span></p>
+    <p class="founders-closing-sub">Precision Engineered &nbsp;·&nbsp; Industry Trusted</p>
+  </div>
+</section>
+
 <!-- TEAM & CONTACT -->
 <section id="contact">
   <div class="section-header reveal">
-    <p class="section-label">04 / Team &amp; Contact</p>
+    <p class="section-label">05 / Team &amp; Contact</p>
     <h2 class="title">Let's Build.</h2>
     <div class="section-rule"></div>
     <p class="subtitle" style="color:var(--muted)">Raipur, CG &nbsp;·&nbsp; +05:30 GMT</p>
@@ -2067,10 +2378,20 @@ const revealObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 reveals.forEach(el => revealObs.observe(el));
 
-/* ─── Hero reveals on load ─── */
+/* ─── Hero reveals on load — GSAP stagger entrance ─── */
 window.addEventListener('load', () => {
-  document.querySelectorAll('#hero .reveal').forEach(el => {
-    setTimeout(() => el.classList.add('visible'), 200);
+  if (typeof gsap === 'undefined') {
+    document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
+    return;
+  }
+  const heroEls = [...document.querySelectorAll('#hero .reveal')];
+  heroEls.forEach(el => { el.style.transition = 'none'; });
+  gsap.set(heroEls, { opacity: 0, y: 44 });
+  gsap.to(heroEls, {
+    opacity: 1, y: 0,
+    duration: 1.15, stagger: 0.13,
+    ease: 'power3.out', delay: 0.35,
+    clearProps: 'transform'
   });
 });
 
@@ -2147,6 +2468,57 @@ function handleSubmit(e) {
   document.getElementById('enquiry-form').style.display = 'none';
   document.getElementById('form-success').style.display = 'block';
 }
+
+/* ─── Founders section — GSAP stagger card reveals ─── */
+(function () {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  const cards = document.querySelectorAll('.founder-card');
+  if (!cards.length) return;
+
+  /* Set initial state (override CSS reveal) */
+  gsap.set(cards, { opacity: 0, y: 48, scale: 0.98 });
+
+  ScrollTrigger.create({
+    trigger: '#founders',
+    start: 'top 75%',
+    once: true,
+    onEnter: () => {
+      gsap.to(cards, {
+        opacity: 1, y: 0, scale: 1,
+        duration: 1.05, stagger: 0.18,
+        ease: 'power3.out'
+      });
+    }
+  });
+
+  /* Founders intro quote reveal */
+  const intro = document.querySelector('.founders-intro');
+  if (intro) {
+    gsap.set(intro, { opacity: 0, x: -32 });
+    ScrollTrigger.create({
+      trigger: intro,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        gsap.to(intro, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' });
+      }
+    });
+  }
+
+  /* Cert strip + closing reveal */
+  const strip   = document.querySelector('.founders-cert-strip');
+  const closing = document.querySelector('.founders-closing');
+  [strip, closing].forEach((el, i) => {
+    if (!el) return;
+    gsap.set(el, { opacity: 0, y: 24 });
+    ScrollTrigger.create({
+      trigger: el, start: 'top 85%', once: true,
+      onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.8, delay: i * 0.1, ease: 'power2.out' })
+    });
+  });
+})();
 
 /* ─── THREE.JS GEAR ANIMATION ─── */
 (function() {
@@ -2306,77 +2678,45 @@ function handleSubmit(e) {
   /* Commit masterGroup to scene once all geometry is built */
   scene.add(masterGroup);
 
-  /* ── Animation: scroll-driven rotation + canvas drift through hero→intro→industries ── */
-  let gearAngle  = 0;
-  let floatT     = 0;
-  let smoothP    = 0;
+  /* ── Animation: scroll-driven rotation + GSAP-scrubbed canvas drift ── */
+  let gearAngle   = 0;
+  let floatT      = 0;
+  let gearProg    = 0;   /* 0..1, driven by GSAP ScrollTrigger */
   let lastScrollY = window.scrollY;
-  const BIG_SPEED = 0.012;  /* radians per pixel scrolled */
+  const BIG_SPEED = 0.010;
 
-  /*
-   * Progress: 0 = hero in view, 1 = industries fully in view.
-   * Broken into two equal halves:
-   *   0–0.5 : hero bottom exits → intro centre
-   *   0.5–1 : intro bottom exits → industries centre
-   */
-  function getRawProgress() {
-    const hero  = document.getElementById('hero');
-    const intro = document.getElementById('introduction');
-    const ind   = document.getElementById('industries');
-    if (!hero || !intro || !ind) return 0;
-
-    const sy = window.scrollY;
-    const phase1Start = hero.offsetTop  + hero.offsetHeight  * 0.15;
-    const phase1End   = intro.offsetTop + intro.offsetHeight * 0.5;
-    const phase2Start = phase1End;
-    const phase2End   = ind.offsetTop   + ind.offsetHeight   * 0.4;
-
-    if (sy <= phase1Start) return 0;
-    if (sy <= phase1End)   return 0.5 * (sy - phase1Start) / (phase1End - phase1Start);
-    if (sy <= phase2End)   return 0.5 + 0.5 * (sy - phase2Start) / (phase2End - phase2Start);
-    return 1;
-  }
-
-  /* Opacity: visible only in TRANSITION zones between sections, not during sections */
+  /* Fade gear canvas: visible hero → intro → industries, gone before founders */
   function getOpacity() {
-    const hero  = document.getElementById('hero');
-    const intro = document.getElementById('introduction');
-    const caps  = document.getElementById('capabilities');
-    const ind   = document.getElementById('industries');
-    const contact = document.getElementById('contact');
+    const hero     = document.getElementById('hero');
+    const intro    = document.getElementById('introduction');
+    const ind      = document.getElementById('industries');
+    const founders = document.getElementById('founders');
     if (!hero) return 0;
 
-    const vh = window.innerHeight;
-    const centerY = vh * 0.5; /* viewport center line */
+    const vh      = window.innerHeight;
+    const centerY = vh * 0.5;
 
-    /* Fade in as hero exits top */
-    const heroR = hero.getBoundingClientRect();
+    const heroR  = hero.getBoundingClientRect();
     const fadeIn = Math.min(1, Math.max(0, (vh - heroR.top) / (vh * 0.45)));
 
-    /* Fade out when intro is centered (±30% viewport around center) */
     let introDim = 1;
     if (intro) {
       const r = intro.getBoundingClientRect();
-      const introCenter = r.top + r.height * 0.5;
-      const distFromCenter = Math.abs(introCenter - centerY);
-      /* Within 30% of viewport height from center = fully faded */
-      introDim = Math.min(1, Math.max(0, (distFromCenter - vh * 0.15) / (vh * 0.25)));
+      const d = Math.abs(r.top + r.height * 0.5 - centerY);
+      introDim = Math.min(1, Math.max(0, (d - vh * 0.15) / (vh * 0.25)));
     }
 
-    /* Fade out when industries is centered */
     let indDim = 1;
     if (ind) {
       const r = ind.getBoundingClientRect();
-      const indCenter = r.top + r.height * 0.5;
-      const distFromCenter = Math.abs(indCenter - centerY);
-      indDim = Math.min(1, Math.max(0, (distFromCenter - vh * 0.15) / (vh * 0.25)));
+      const d = Math.abs(r.top + r.height * 0.5 - centerY);
+      indDim = Math.min(1, Math.max(0, (d - vh * 0.15) / (vh * 0.25)));
     }
 
-    /* Fade out when contact enters */
     let fadeOut = 1;
-    if (contact) {
-      const cr = contact.getBoundingClientRect();
-      fadeOut = Math.min(1, Math.max(0, cr.top / (vh * 0.75)));
+    if (founders) {
+      const fr = founders.getBoundingClientRect();
+      fadeOut = Math.min(1, Math.max(0, fr.top / (vh * 0.65)));
     }
 
     return fadeIn * introDim * indDim * fadeOut;
@@ -2384,39 +2724,39 @@ function handleSubmit(e) {
 
   function easeIO(x) { return x < 0.5 ? 4*x*x*x : 1 - Math.pow(-2*x+2,3)/2; }
 
+  /* Scroll delta drives gear rotation */
   window.addEventListener('scroll', () => {
     const delta = window.scrollY - lastScrollY;
     lastScrollY = window.scrollY;
-    gearAngle += delta * BIG_SPEED;
+    gearAngle  += delta * BIG_SPEED;
   }, { passive: true });
 
+  /* GSAP ScrollTrigger owns the canvas Y position — much smoother than manual lerp */
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'top top',
+    endTrigger: '#industries',
+    end: 'bottom center',
+    scrub: 2.8,
+    onUpdate: self => { gearProg = self.progress; }
+  });
+
+  /* rAF loop: rotation + float + opacity + render */
   function mainLoop() {
     requestAnimationFrame(mainLoop);
-
     floatT += 0.008;
 
-    /* Scroll-driven rotation */
     bigGroup.rotation.z   =  gearAngle;
     smallGroup.rotation.z = -(gearAngle * (24 / 14)) + (Math.PI / 14);
 
-    /* Smooth progress */
-    smoothP += (getRawProgress() - smoothP) * 0.065;
-    const e      = easeIO(Math.min(1, smoothP));
-    const floatW = Math.max(0, 1 - smoothP * 4);
+    const e      = easeIO(Math.min(1, gearProg));
+    const floatW = Math.max(0, 1 - gearProg * 3.5);
 
-    /*
-     * Two-phase canvas travel:
-     *   Phase 1 (e: 0→0.5): gears drift down from hero into intro right side
-     *   Phase 2 (e: 0.5→1): gears drift further down into industries right side
-     * Canvas stays fixed right:0 width:55% — only translateY moves it down.
-     * masterGroup shifts in 3D to keep gears visually centred in frame.
-     */
-    const ty = e * 34;           /* 0 → 34vh downward drift — reaches industries */
-    canvas.style.transform = `translateY(${ty}vh)`;
-
+    canvas.style.transform = `translateY(${e * 34}vh)`;
     masterGroup.position.set(
       -e * 0.6,
-      -e * 2.2 + Math.sin(floatT) * 0.06 * floatW,
+      -e * 2.2 + Math.sin(floatT) * 0.055 * floatW,
       0
     );
 
